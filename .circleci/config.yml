@@ -2,7 +2,7 @@ version: 2.1
 executors:
   angular_executor:
     docker:
-      - image: circleci/node:14.17.0-browsers
+      - image: circleci/node:14.0.0-browsers
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
             aws configure set aws_access_key_id <your_access_key>
             aws configure set aws_secret_access_key <your_secret_key>
             aws configure set default.region <your_region>
-            aws s3 sync ./dist s3://<your_bucket_name>
+            aws s3 sync ./dist/outside-fe s3://<your_bucket_name>
 
 workflows:
   version: 2
