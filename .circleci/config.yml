@@ -11,6 +11,12 @@ jobs:
     executor: angular_executor
     steps:
       - checkout
+      - run:
+          name: Installing AWS CLI
+          command: |
+            sudo apt-get update
+            sudo apt install python3-pip
+            sudo pip3 install awsebcli --upgrade
 
       - restore_cache:
           keys:
