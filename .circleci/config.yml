@@ -1,40 +1,79 @@
 version: 2.1
+executors:
+  angular_executor:
+    docker:
+      - image: circleci/node:14.17.0-browsers
 
 jobs:
   build:
-    machine:
-      image: ubuntu-2204:2023.04.2
+    executor: angular_executor
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+
       - run:
-          name: Installing AWS CLI
-          command: |
-            sudo apt-get update
-            sudo apt install python3-pip
-            sudo pip3 install awsebcli --upgrade
-      - run: npm install --legacy-peer-deps && npm run build:production
-      - persist_to_workspace:
-          root: .
+          name: Install Dependencies
+          command: npm install --legacy-peer-deps
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
           paths:
-            - .
-            
-  deploy:
-    machine:
-        image: ubuntu-2204:2023.04.2
-    steps:
-      - attach_workspace:
-          at: .
-      - checkout
-      - run: aws s3 sync ./app/build s3://ci-cd-example
-    
+            - node_modules
+
+      - run:
+          name: Build
+          command: npm run build:production
+
+      # Add any additional steps here, such as running tests or deploying
 
 workflows:
-  build_test_deploy:
+  version: 2
+  build_and_test:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
+
+
+# version: 2.1
+
+# jobs:
+#   build:
+#     machine:
+#       image: ubuntu-2204:2023.04.2
+#     steps:
+#       - checkout
+#       - run:
+#           name: Installing AWS CLI
+#           command: |
+#             sudo apt-get update
+#             sudo apt install python3-pip
+#             sudo pip3 install awsebcli --upgrade
+#       - run: npm install --legacy-peer-deps && npm run build:production
+#       - persist_to_workspace:
+#           root: .
+#           paths:
+#             - .
+            
+#   deploy:
+#     machine:
+#         image: ubuntu-2204:2023.04.2
+#     steps:
+#       - attach_workspace:
+#           at: .
+#       - checkout
+#       - run: aws s3 sync ./app/build s3://ci-cd-example
+    
+
+# workflows:
+#   build_test_deploy:
+#     jobs:
+#       - build
+#       - deploy:
+#           requires:
+#             - build
 # phases:
 #   install:
 #     runtime-versions:
