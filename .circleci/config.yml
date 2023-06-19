@@ -31,9 +31,9 @@ jobs:
       - run:
           name: Deploy to S3
           command: |
-            aws configure set aws_access_key_id <AKIASHRYCLQM5SBLHGGB>
-            aws configure set aws_secret_access_key <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>
-            aws configure set default.region <us-east-1>
+            aws configure set aws_access_key_id "AKIASHRYCLQM5SBLHGGB"
+            aws configure set aws_secret_access_key "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"
+            aws configure set default.region "us-east-1"
             aws s3 sync ./dist/outside-fe s3://outside-fe-circle-ci
 
 workflows:
