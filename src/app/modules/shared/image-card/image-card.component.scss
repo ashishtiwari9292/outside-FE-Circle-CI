@@ -1,0 +1,138 @@
+@import "../../../../assets/scss/variables.scss";
+
+.imagecard {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius-md;
+    box-shadow: $shadow-card;
+    &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color-black, 0.3);
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    & > img {
+        width: 100%;
+        min-height: 100px;
+        object-fit: cover;
+        ::ng-deep .gallery__grid & {
+            height: 200px;
+            @include max-screen($mobile) {
+                height: 110px;
+            }
+        }
+        ::ng-deep .user-whishlist & {
+            height: 280px;
+            @include max-screen($mobile) {
+                height: 160px;
+            }
+        }
+        ::ng-deep .post__similar & {
+            max-height: 300px;
+            min-height: 190px;
+        }
+    }
+    &.videoWrap {
+        & > video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            @include max-screen($mobile) {
+                height: 160px;
+            }
+            ::ng-deep .user-whishlist & {
+                height: 280px !important;
+                @include max-screen($mobile) {
+                    height: 160px !important;
+                }
+            }
+            ::ng-deep .post__similar & {
+                max-height: 300px !important;
+                min-height: 190px;
+            }
+
+            ::ng-deep video .gallery__grid & {
+                height: 200px !important;
+                @include max-screen($mobile) {
+                    height: 110px !important;
+                }
+            }
+        }
+    }
+    span {
+        width: 30px;
+        margin-left: auto;
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 3;
+        @include max-screen($mobile) {
+            width: 22px;
+        }
+        img {
+            &:nth-of-type(2) {
+                display: none;
+            }
+        }
+        &.active {
+            img {
+                display: none;
+                &:nth-of-type(2) {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    &__content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        padding: 35px 15px 15px;
+        color: $color-white;
+        transition: $base-transition;
+        @include max-screen($mobile) {
+            padding: 35px 10px 10px;
+        }
+        .imagecard:hover & {
+            background-color: rgba($color-black, 0.3);
+        }
+        aside {
+            min-height: 48px;
+            transform: translateY(30px);
+            transition: $base-transition;
+            .imagecard:hover & {
+                transform: translateY(0);
+            }
+            h5 {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: $color-white;
+                @include max-screen($tablet) {
+                    font-size: 16px;
+                }
+            }
+            p {
+                @include text-clamp(1);
+                font-size: 14px;
+                margin-bottom: 0;
+                opacity: 0;
+                transition: $base-transition;
+                .imagecard:hover & {
+                    opacity: 1;
+                }
+                @include max-screen($tablet) {
+                    opacity: 1;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

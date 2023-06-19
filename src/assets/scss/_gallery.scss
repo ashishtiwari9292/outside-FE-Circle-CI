@@ -1,0 +1,94 @@
+.gallery {
+    &__toggles {
+        text-align: right;
+        margin: 10px 0 30px;
+        button {
+            @extend %button-type-remove;
+            @extend %image-change;
+            margin-left: 30px;
+            width: 22px;
+            cursor: pointer;
+            &.active {
+                img {
+                    display: none;
+                    &:nth-of-type(2) {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+    &__skelton {
+        margin: 0 -15px;
+        @include max-screen($mobile) {
+            margin: 0 -5px;
+        }
+        &-item {
+            width: calc(100% / 4);
+            padding: 0 15px;
+            margin-bottom: 25px;
+            @include max-screen($desktop) {
+                width: calc(100% / 3);
+            }
+            @include max-screen($mobile) {
+                width: calc(100% / 2);
+                padding: 0 5px;
+            }
+        }
+    }
+    &__grid {
+        margin: 0 -15px;
+        @include max-screen($mobile) {
+            margin: 0 -5px;
+        }
+        app-image-card {
+            display: block;
+            width: calc(100% / 4);
+            padding: 0 15px;
+            margin-bottom: 30px;
+            @include max-screen($desktop) {
+                width: calc(100% / 3);
+            }
+            @include max-screen($mobile) {
+                width: calc(100% / 2);
+                padding: 0 5px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    &__masonry {
+        margin: 0 -15px;
+        @include max-screen($mobile) {
+            margin: 0 -5px;
+        }
+        &-item {
+            width: calc(100% / 4);
+            padding: 0 15px;
+            margin-bottom: 30px;
+            @include max-screen($desktop) {
+                width: calc(100% / 3);
+            }
+            @include max-screen($mobile) {
+                width: calc(100% / 2);
+                padding: 0 5px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    &__loading {
+        text-align: center;
+        button {
+            @extend %button-type-remove;
+            margin-bottom: 15px;
+            cursor: auto;
+            &:hover {
+                color: $color-primary;
+            }
+            .btn-loader {
+                &__dots {
+                    background: $color-primary;
+                }
+            }
+        }
+    }
+}

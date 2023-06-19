@@ -1,0 +1,166 @@
+<div class="searchResult">
+    <div class="searchResult__container">
+        <mat-tab-group [(selectedIndex)]="currentTab" (selectedTabChange)="onTabClick($event)">
+
+            <!-- all tab -->
+            <mat-tab label="All">
+                <!-- search block -->
+                <div class="searchResult__box" *ngIf="usersList && usersList.length > 0">
+                    <h5>People</h5>
+                    <ul class="people">
+                        <ng-container *ngIf="!isLoadingUsers">
+                            <li class="dflex alignCenter justifyBetween" *ngFor="let data of usersList">
+                                <figure class="dflex alignCenter" (click)="onUserClick(data.username)" role="cursor">
+                                    <img [src]="data.photoUrl ||
+                                        'assets/images/skelton-man-md.png'" alt="User" />
+                                    <figcaption>
+                                        <h6>{{ data.fullName }}</h6>
+                                        <p>{{ data.username }}</p>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                        </ng-container>
+                        <ng-container *ngIf="isLoadingUsers">
+                            <li class="dflex alignCenter justifyBetween" *ngFor="let i of [].constructor(5)">
+                                <figure class="dflex alignCenter">
+                                    <app-skeleton [type]="'circle'" width="70px" height="70px" margin="0 10px 0 0">
+                                    </app-skeleton>
+                                    <div>
+                                        <app-skeleton width="130px" height="10px" margin="0 10px 10px 0"></app-skeleton>
+                                        <app-skeleton width="90px" height="10px" margin="0"></app-skeleton>
+                                    </div>
+                                </figure>
+                                <aside>
+                                    <app-skeleton width="90px" height="30px" margin="5px"></app-skeleton>
+                                </aside>
+                            </li>
+                        </ng-container>
+                    </ul>
+                    <div class="searchResult__viewAll" *ngIf="currentTab == 0 &&
+                        usersList && usersList.length> 4">
+                        <button type="button" class="button gray" (click)="changeTab(1)">
+                            View All
+                        </button>
+                    </div>
+                    <div class="noPostFound" *ngIf="(!usersList || !usersList.length ||
+                        usersList.length == 0) && !isLoadingUsers">
+                        <article>
+                            <img src="assets/images/no-data.svg" alt="No Data
+                                Found">
+                            <h5>No users found!</h5>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- search block -->
+                <div class="searchResult__box">
+                    <h5>Posts</h5>
+                    <ul class="dflex posts">
+                        <li *ngFor="let post of postsList">
+                            <app-post-card [isLoading]="isLoadingPosts" [ownProfile]="false" [post]="post"
+                                (onLikeClickPost)="onLikeClick($event)"></app-post-card>
+                        </li>
+                        <ng-container *ngIf="isLoadingPosts">
+                            <li *ngFor="let i of [].constructor(3)">
+                                <app-post-card></app-post-card>
+                            </li>
+                        </ng-container>
+                    </ul>
+                    <div class="searchResult__viewAll" *ngIf="currentTab == 0 &&
+                        postsList && postsList.length> 4">
+                        <button type="button" class="button gray" (click)="changeTab(2)">
+                            View All
+                        </button>
+                    </div>
+                    <div class="noPostFound" *ngIf="(!postsList || !postsList.length ||
+                        postsList.length == 0) && !isLoadingPosts">
+                        <article>
+                            <img src="assets/images/no-data.svg" alt="No Data
+                                Found">
+                            <h5>No posts found!</h5>
+                        </article>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- people tab -->
+            <mat-tab label="People">
+                <div class="searchResult__box">
+                    <h5>People</h5>
+                    <ul infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
+                        (scrolled)="onScroll()" class="people">
+                        <ng-container *ngIf="!isLoadingUsers">
+                            <li class="dflex alignCenter justifyBetween" *ngFor="let data of usersList">
+                                <figure class="dflex alignCenter" (click)="onUserClick(data.username)" role="cursor">
+                                    <img [src]="data.photoUrl ||
+                                        'assets/images/skelton-man-md.png'" alt="User" />
+                                    <figcaption>
+                                        <h6>{{ data.fullName }}</h6>
+                                        <p>{{ data.username }}</p>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                        </ng-container>
+                        <ng-container *ngIf="isLoadingUsers">
+                            <li *ngFor="let i of [].constructor(10)">
+                                <figure class="dflex alignCenter">
+                                    <app-skeleton [type]="'circle'" width="70px" height="70px" margin="0 10px 0 0">
+                                    </app-skeleton>
+                                    <div>
+                                        <app-skeleton width="130px" height="10px" margin="0 10px 10px 0"></app-skeleton>
+                                        <app-skeleton width="90px" height="10px" margin="0"></app-skeleton>
+                                    </div>
+                                </figure>
+                                <aside>
+                                    <app-skeleton width="90px" height="30px" margin="5px"></app-skeleton>
+                                </aside>
+                            </li>
+                        </ng-container>
+                    </ul>
+                    <div class="noPostFound" *ngIf="(!usersList || !usersList.length ||
+                        usersList.length == 0) && !isLoadingUsers">
+                        <article>
+                            <img src="assets/images/no-data.svg" alt="No Data
+                                Found">
+                            <h5>No users found!</h5>
+                        </article>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-- posts -->
+            <mat-tab label="Posts">
+                <div class="searchResult__box">
+                    <h5>Posts</h5>
+                    <ul class="dflex posts">
+                        <li *ngFor="let post of postsList">
+                            <app-post-card [isLoading]="isLoadingPosts" [ownProfile]="false" [post]="post"
+                                (onLikeClickPost)="onLikeClick($event)"></app-post-card>
+                        </li>
+                        <ng-container *ngIf="isLoadingPosts">
+                            <li *ngFor="let i of [].constructor(3)">
+                                <app-post-card></app-post-card>
+                            </li>
+                        </ng-container>
+                    </ul>
+                    <button *ngIf="loadingMore" class="button sm link">
+                        Loading
+                        <div class="btn-loader">
+                            <span class="btn-loader__dots"></span>
+                            <span class="btn-loader__dots"></span>
+                            <span class="btn-loader__dots"></span>
+                        </div>
+                    </button>
+                    <div class="noPostFound" *ngIf="(!postsList || !postsList.length ||
+                        postsList.length == 0) && !isLoadingPosts">
+                        <article>
+                            <img src="assets/images/no-data.svg" alt="No Data
+                                Found">
+                            <h5>No posts Found!</h5>
+                        </article>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

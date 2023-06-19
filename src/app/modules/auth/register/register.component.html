@@ -1,0 +1,47 @@
+<form class="register" *ngIf="action == 'register'" [formGroup]="registerForm" (ngSubmit)="registerFormSubmit()">
+    <div class="field-group">
+        <app-input-field [placeholder]="'Email'" [type]="'email'" [formGroup]="this.registerForm"
+            [fieldControlName]="'email'" [isFocus]="true">
+        </app-input-field>
+        <span *ngIf="handleErrors(registerForm, 'email', 'required')" class="error">
+            {{ getErrorMessage("required") }}
+        </span>
+        <span *ngIf="handleErrors(registerForm, 'email', 'pattern')" class="error">
+            {{ getErrorMessage("email") }}
+        </span>
+    </div>
+    <div class="field-group">
+        <app-input-field [maxlength]="50" [placeholder]="'Full Name'" [type]="'text'" [formGroup]="this.registerForm"
+            [fieldControlName]="'fullName'">
+        </app-input-field>
+        <span *ngIf="handleErrors(registerForm, 'fullName', 'required') || handleErrors(registerForm, 'fullName', 'pattern')" class="error">
+            {{ getErrorMessage("required") }}
+        </span>
+    </div>
+    <div class="field-group">
+        <app-input-field [maxlength]="50" (onKeyUpEvent)="onKeyUp($event)" [placeholder]="'Username'" [type]="'text'"
+            [formGroup]="this.registerForm" [fieldControlName]="'username'">
+        </app-input-field>
+        <span *ngIf="handleErrors(registerForm, 'username', 'required')" class="error">
+            {{ getErrorMessage("required") }}
+        </span>
+        <span *ngIf="handleErrors(registerForm, 'username', 'pattern')" class="error">
+            {{ getErrorMessage("patternUsername") }}
+        </span>
+        <span *ngIf="!isUnique" class="error">
+            Username already exists!
+        </span>
+    </div>
+    <div class="field-group text-center">
+        <app-button [passedClass]="'w-full'" [buttonText]="'Continue'" [loading]="isLoading"></app-button>
+    </div>
+    <div class="field-group text-center">
+        <a class="button link w-full register__login" (click)="onLoginClick()" title="Sign In!">
+            Login!
+        </a>
+    </div>
+</form>
+<app-reset-password *ngIf="action == 'resetpassword'" [isOtpRequired]="true" [email]="this.userEmail"
+    (newPassword)="onNewPassword($event)" [placeholder]="'Enter temporary password'"
+    [otpText]="'Please enter one time password received on your email'" [buttonText]="'Create Password'" [isLoading]="isResetLoading">
+</app-reset-password>

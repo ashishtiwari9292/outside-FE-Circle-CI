@@ -1,0 +1,48 @@
+<div class="dialog__login">
+    <div class="dialog__wrap">
+        <span (click)="closeModal('NO')" class="dialog__close">
+            <img src="assets/images/close-blue.svg" alt="Remove" />
+        </span>
+        <div class="dialog__body">
+            <div class="auth-popup dflex">
+                <div class="auth-popup__left">
+                    <div class="auth-popup__left-logo">
+                        <app-logo></app-logo>
+                    </div>
+                    <app-login (linkClick)="onLinkClick($event)" *ngIf="popupType == 'login'"></app-login>
+                    <app-register (linkClick)="onLinkClick($event)" *ngIf="popupType == 'register'"></app-register>
+                    <app-forgot-password (linkClick)="onLinkClick($event)" *ngIf="popupType == 'forgot'">
+                    </app-forgot-password>
+                </div>
+                <div class="auth-popup__right">
+                    <div class="auth-popup__sliderImg">
+                        <app-auth-carousel></app-auth-carousel>
+                    </div>
+                    <div class="auth-popup__content flex flexColumn justifyBetween">
+                        <div class="auth-popup__content-top">
+                            <p>Start your journey with</p>
+                            <h2>Outside</h2>
+                        </div>
+                        <div class="auth-popup__content-middle">
+                            <div class="auth-popup__media flex alignCenter">
+                                <div class="auth-popup__media-icon text-center">
+                                    <img [src]="pageData?.icon" alt="{{pageData?.title }}" />
+                                </div>
+                                <p *ngIf="popupType != 'forgot'">{{ pageData?.title }}</p>
+                                <p *ngIf="popupType == 'forgot'">Reset Password</p>
+                            </div>
+                        </div>
+                        <div class="auth-popup__content-bottom">
+                            <p class="text-ellipse">
+                                <small>In search of incredible things?</small>
+                            </p>
+                            <p class="text-ellipse">
+                                <small>One stop solution for lorem ispom dolor sit amet</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

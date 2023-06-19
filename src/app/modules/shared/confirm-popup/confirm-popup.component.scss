@@ -1,0 +1,10 @@
+@import '../../../../assets/scss/variables.scss';
+
+.confirmation {
+    &__buttons {
+        text-align: center;
+        button {
+            margin: 5px;
+        }
+    }
+}

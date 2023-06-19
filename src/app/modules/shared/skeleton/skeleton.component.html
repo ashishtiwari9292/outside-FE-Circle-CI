@@ -1,0 +1,216 @@
+<!-- circle -->
+<ng-container *ngIf="type === 'circle'">
+  <ngx-skeleton-loader count="1" [theme]="{  
+        'border-radius': '50%',
+        height: height,
+        width: width,
+        margin: margin
+        }" animation="progress">
+  </ngx-skeleton-loader>
+</ng-container>
+
+<!-- bar -->
+<ng-container *ngIf="type === 'bar'">
+  <ngx-skeleton-loader count="1" [theme]="{  
+        'border-radius': radius,
+        height: height,
+        width: width,
+        margin: margin
+        }" animation="progress">
+  </ngx-skeleton-loader>
+</ng-container>
+
+<div *ngIf="type == 'post-details'" class="post-details dflex">
+  <div class="post-details__left">
+    <ngx-skeleton-loader [theme]="{ 
+        'width': '100%',
+        'height': '486px'
+      }"></ngx-skeleton-loader>
+  </div>
+  <div class="post-details__right">
+    <div class="post-details__head flex alignCenter justifyBetween">
+      <div class="flex alignCenter">
+        <ngx-skeleton-loader [theme]="{ 
+            'width': '50px',
+            'height': '50px',
+            'border-radius': '40px',
+            'margin-right': '20px'
+          }"></ngx-skeleton-loader>
+        <div>
+          <ngx-skeleton-loader [theme]="{ 
+                'width': '150px',
+                'height': '10px'
+              }"></ngx-skeleton-loader>
+          <ngx-skeleton-loader [theme]="{ 
+                'width': '100px',
+                'height': '10px'
+              }"></ngx-skeleton-loader>
+        </div>
+      </div>
+      <ngx-skeleton-loader [theme]="{ 
+          'width': '30px',
+          'height': '10px'
+        }"></ngx-skeleton-loader>
+    </div>
+    <ngx-skeleton-loader [theme]="{ 
+          'width': '200px',
+          'height': '14px',
+          'margin': '0 0 15px'
+        }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="{ 
+          'width': '120px',
+          'height': '10px',
+          'margin': '0 0 30px'
+        }"></ngx-skeleton-loader>
+    <div class="dflex">
+      <ngx-skeleton-loader [theme]="{ 
+          'width': '80px',
+          'height': '50px',
+          'margin-right': '15px'
+        }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{ 
+          'width': '180px',
+          'height': '50px'
+        }"></ngx-skeleton-loader>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="type == 'profile'" class="profile">
+  <aside class="dflex alignCenter profile__image">
+    <div class="profile__image-left">
+      <ngx-skeleton-loader [theme]="{
+          height: '150px',
+          width: '150px',
+          'border-radius': '50%',
+          'margin-right': '20px'
+        }"></ngx-skeleton-loader>
+    </div>
+    <div class="profile__image-right">
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '150px'
+        }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '100px'
+        }"></ngx-skeleton-loader>
+    </div>
+  </aside>
+  <aside>
+    <ngx-skeleton-loader [theme]="{
+        height: '10px',
+        width: '100px'
+      }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="{
+        height: '150px',
+        width: '100%'
+      }"></ngx-skeleton-loader>
+  </aside>
+  <aside>
+    <ngx-skeleton-loader [theme]="{
+        height: '10px',
+        width: '100px'
+      }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="{
+        height: '150px',
+        width: '100%'
+      }"></ngx-skeleton-loader>
+  </aside>
+  <aside>
+    <ngx-skeleton-loader [theme]="{
+        height: '10px',
+        width: '100px'
+      }"></ngx-skeleton-loader>
+    <div class="dflex justifyBetween">
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '140px'
+        }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '140px'
+        }"></ngx-skeleton-loader>
+    </div>
+    <div class="dflex justifyBetween">
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '140px'
+        }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '140px'
+        }"></ngx-skeleton-loader>
+    </div>
+    <div class="dflex justifyBetween">
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '140px'
+        }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{
+          height: '10px',
+          width: '140px'
+        }"></ngx-skeleton-loader>
+    </div>
+  </aside>
+</div>
+
+<div *ngIf="type == 'comments'" class="comments">
+  <ngx-skeleton-loader [theme]="{ 
+      'width': '120px',
+      'height': '12px',
+      'margin': '0 0 20px'
+    }"></ngx-skeleton-loader>
+  <div class="flex alignCenter comments__list" *ngFor="let i of [].constructor(2)">
+    <ngx-skeleton-loader [theme]="{ 
+        'width': '50px',
+        'height': '50px',
+        'border-radius': '40px',
+        'margin-right': '20px'
+      }"></ngx-skeleton-loader>
+    <div>
+      <ngx-skeleton-loader [theme]="{ 
+            'width': '180px',
+            'height': '10px'
+          }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{ 
+            'width': '120px',
+            'height': '10px'
+          }"></ngx-skeleton-loader>
+    </div>
+  </div>
+  <div class="flex alignCenter">
+    <ngx-skeleton-loader [theme]="{ 
+        'width': '50px',
+        'height': '50px',
+        'border-radius': '40px',
+        'margin-right': '20px'
+      }"></ngx-skeleton-loader>
+    <aside>
+      <ngx-skeleton-loader [theme]="{ 
+            'width': '100%',
+            'height': '35px'
+          }"></ngx-skeleton-loader>
+    </aside>
+  </div>
+</div>
+<div *ngIf="type == 'comments-list'">
+  <div class="flex alignCenter comments__list" *ngFor="let i of [].constructor(2)">
+    <ngx-skeleton-loader [theme]="{ 
+        'width': '50px',
+        'height': '50px',
+        'border-radius': '40px',
+        'margin-right': '20px'
+      }"></ngx-skeleton-loader>
+    <div>
+      <ngx-skeleton-loader [theme]="{ 
+            'width': '180px',
+            'height': '10px'
+          }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{ 
+            'width': '120px',
+            'height': '10px'
+          }"></ngx-skeleton-loader>
+    </div>
+  </div>
+</div>

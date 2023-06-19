@@ -1,0 +1,33 @@
+<div class="input-field" 
+    [ngClass]="{ password:
+    fieldControlName == 'password' || fieldControlName == 'confirmPassword' || fieldControlName == 'currentpassword' || fieldControlName == 'otp'}"
+    [formGroup]="formGroup">
+    <label for="" *ngIf="label"><strong>{{ label }}</strong></label>
+    
+    <div class="input-field__inner">
+    <input
+        [type]="type"
+        (click)="onInputClick($event)"
+        [formControlName]="fieldControlName || 'placeholder'"
+        appAutoFocus
+        [isFocus]="isFocus"
+        placeholder="{{ placeholder }}"
+        [multiple]="isMultiple ? 'true' : null"
+        (change)="listenToClick && onFileChange($event)"
+        (drop)="onFileDropEvent($event)"
+        [maxlength]="maxlength"
+        [accept]="accept ? accept : null"
+        (keyup)="onKeyUp($event)" 
+    />
+
+    <span class="eye"
+        *ngIf="fieldControlName == 'password' ||
+        fieldControlName == 'confirmPassword' ||
+        fieldControlName == 'otp' ||
+        fieldControlName == 'currentpassword'"
+        (click)="togglePasswordVisibility()">
+        <img *ngIf="!isPasswordVisible" src="assets/images/eye-gray-hide.svg" alt="Eye"/>
+        <img *ngIf="isPasswordVisible" src="assets/images/eye-gray-show.svg" alt="Eye"/>
+    </span>
+</div>
+</div>

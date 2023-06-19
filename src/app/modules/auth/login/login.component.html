@@ -1,0 +1,44 @@
+<div class="login-form">
+    <form *ngIf="action == 'login'" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <div class="field-group">
+            <app-input-field [placeholder]="'Email'" [type]="'email'" [formGroup]="this.loginForm"
+                [fieldControlName]="'email'" [isFocus]="true">
+            </app-input-field>
+            <span *ngIf="handleErrors(loginForm, 'email', 'email')" class="error">
+                {{ getErrorMessage("email") }}
+            </span>
+            <span *ngIf="handleErrors(loginForm, 'email', 'required')" class="error">
+                {{ getErrorMessage("required") }}
+            </span>
+        </div>
+        <div class="field-group">
+            <app-input-field [placeholder]="'Password'" [type]="'password'" [formGroup]="this.loginForm"
+                [fieldControlName]="'password'">
+            </app-input-field>
+            <span *ngIf="handleErrors(loginForm, 'password', 'required')" class="error">
+                {{ getErrorMessage("required") }}
+            </span>
+        </div>
+        <div class="login-form__accept field-group flex alignCenter justifyBetween">
+            <!-- <div class="custom-checkbox">
+                <input type="checkbox"/>
+                <span>Remember me</span>
+            </div> -->
+            <a class="login-form__link" (click)="onForgotPasswordClick()" title="Forgot password?">
+                Forgot password?
+            </a>
+        </div>
+        <div class="field-group text-center">
+            <app-button [passedClass]="'w-full'" [buttonText]="'Login'" [loading]="isLoading"></app-button>
+        </div>
+        <div class="field-group text-center">
+            <a class="login-form__signup" (click)="onRegisterClick()" title="Sign Up!">
+                Sign Up!
+            </a>
+        </div>
+    </form>
+    <app-reset-password *ngIf="action == 'resetpassword'" [isOtpRequired]="false" [email]="this.userEmail"
+        (newPassword)="changePassword($event)" [placeholder]="'Enter temporary password'"
+        [otpText]="'Please enter new password'" [isLoading]="isResetLoading">
+    </app-reset-password>
+</div>

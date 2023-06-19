@@ -1,0 +1,26 @@
+@import '../../../../assets/scss/variables.scss';
+.search-wrapper {
+    padding: 105px 15px 20px;
+    min-height: calc(100vh - 58px);
+    @include background-image(search-bg, png, center top, cover, no-repeat);
+    @include max-screen($mobile){
+        padding-top: 60px;
+        min-height: calc(100vh - 70px);
+    }
+    &__content {
+        margin-top: 20px;
+        h3 {
+            font-weight: 500;
+            color: $color-white;
+            text-align: center;
+            @include min-screen($desktop){
+                font-size: 34px;
+            }
+        }
+        article {
+            @include min-screen($desktop){
+                padding-top: 30px;
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<div class="user-posts">
+  <ul infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="500" (scrolled)="onScroll()" class="dflex">
+    <li *ngFor="let post of userPosts">
+      <app-post-card [isLoading]="isLoading" [ownProfile]="true" [userPost]="post"
+        (onDeletePost)="onDeletePost($event)" (onEditPost)="onEditPost($event)">
+      </app-post-card>
+    </li>
+    <ng-container *ngIf="(!userPosts || userPosts.length == 0) && isLoading">
+      <li *ngFor="let i of [].constructor(6)">
+        <app-post-card></app-post-card>
+      </li>
+    </ng-container>
+  </ul>
+  <div *ngIf="loadingMore" class="user-posts__loading">
+    <button class="button sm link">
+      Loading
+      <div class="btn-loader">
+        <span class="btn-loader__dots"></span>
+        <span class="btn-loader__dots"></span>
+        <span class="btn-loader__dots"></span>
+      </div>
+    </button>
+  </div>
+  <div class="noPostFound" *ngIf="!isLoading && (!userPosts || userPosts.length == 0)">
+    <article>
+      <img src="assets/images/no-data.svg" alt="No Data Found">
+      <h5>No posts yet!</h5>
+      <p>You haven't created any post yet.</p>
+      <button type="button" class="button" (click)="createPost()">Create a Post Now</button>
+    </article>
+  </div>
+</div>

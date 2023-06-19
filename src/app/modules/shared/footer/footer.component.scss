@@ -1,0 +1,117 @@
+@import "../../../../assets/scss/variables.scss";
+.footer {
+    font-size: 14px;
+    padding: 13px 0;
+    color: $color-black;
+    border-top: 1px solid lighten($color-black, 83.14);
+    @include max-screen($desktop-xl) {
+        padding: 10px 0;
+    }
+    @include max-screen($mobile) {
+        justify-content: center;
+    }
+
+    ul {
+        margin: 0 -18px;
+        @include max-screen($tablet) {
+            margin: 0 -10px;
+        }
+        @include max-screen($mobile) {
+            margin: 0 -5px;
+        }
+        li {
+            margin: 4px 18px;
+            @include max-screen($tablet) {
+                margin: 4px 10px;
+            }
+            @include max-screen($mobile) {
+                margin: 4px 5px;
+            }
+            a {
+                color: $color-black;
+                &:hover {
+                    color: $color-primary;
+                }
+            }
+        }
+    }
+    p {
+        margin: 0;
+        @include max-screen($mobile){
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
+
+// .footer {
+//     background-color: $color-black-light;
+//     padding: 50px 0 0;
+//     &__info {
+//         width: 100%;
+//         max-width: 1200px;
+//         margin: 0 auto;
+//         &-item {
+//             padding: 0 15px;
+//             &:not(:last-child) {
+//                 margin-bottom: 45px;
+//                 @include min-screen($mobile) {
+//                     flex: 1;
+//                     width: 100%;
+//                 }
+//             }
+//             @include max-screen($mobile) {
+//                 flex: inherit;
+//                 width: 50%;
+//             }
+//             h4 {
+//                 color: $color-white;
+//                 font-size: 16px;
+//             }
+//             ul {
+
+//                 li {
+//                     a {
+//                         color: $color-white;
+//                         font-size: 14px;
+//                         &:hover {
+//                             color: $color-primary;
+//                         }
+//                     }
+//                 }
+//                 &.social-icons {
+//                     li {
+//                         margin: 0 10px 10px 0;
+//                         a {
+//                             display: inline-block;
+//                             width: 25px;
+//                             height: 25px;
+//                             line-height: 25px;
+//                             text-align: center;
+//                             border-radius: $radius-circled;
+//                             background-color: $color-white;
+//                             &:hover {
+//                                 background-color: $color-primary;
+//                             }
+//                             img {
+//                                 width: 13px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     &__copyright {
+//         background-color: $color-black-medium;
+//         p {
+//             width: 100%;
+//             max-width: 1200px;
+//             margin: 0 auto;
+//             font-size: 14px;
+//             color: $color-white;
+//             text-align: center;
+//             padding: 8px 15px;
+//         }
+//     }
+// }

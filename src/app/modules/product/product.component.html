@@ -1,0 +1,39 @@
+<div class="product-detail">
+    <div class="product-detail__container">
+        <div class="dflex">
+            <div class="product-detail__left">
+                <app-product-slider></app-product-slider>
+            </div>
+            <div class="product-detail__right">
+                <h1>{{ product.productName }}</h1>
+                <div class="product-detail__rating">
+                    <star-rating [starType]="'svg'" [rating]="product.rating" [readOnly]="true" [showHalfStars]="true">
+                    </star-rating>
+                    <span (click)="onReviewClick()">({{ product.totalReviews }}customer reviews)</span>
+                </div>
+                <div class="product-detail__seller flex alignCenter">
+                    <img [src]="seller.image" alt="By {{ seller.name }}" />
+                    <article>
+                        <h5>By {{ seller.name }}</h5>
+                        <p>{{ seller.totalProducts }} products</p>
+                    </article>
+                </div>
+                <div class="product-detail__price">
+                    <p>{{ currency + product.price }}</p>
+                    <h4>{{ currency + product.discountedPrice }}</h4>
+                </div>
+                <div class="product-detail__info">
+                    <h5>About the product</h5>
+                    <p>{{ product.description }}</p>
+                </div>
+                <div class="product-detail__actions">
+                    <span role="cursor" (click)="likeProduct()">
+                        <img src="assets/images/heart-green-outline.svg" alt="Wishlist" />
+                        <img src="assets/images/heart-red-filled.svg" alt="Wishlist" />
+                    </span>
+                    <button class="button xl" (click)="addToCart()" title="Add to Cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

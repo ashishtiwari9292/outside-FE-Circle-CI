@@ -1,0 +1,95 @@
+@import "../../../assets/scss/variables.scss";
+
+.product-detail {
+    padding: 30px 0;
+    &__container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+    &__left {
+        width: 40%;
+        margin-bottom: 40px;
+        @include max-screen($tablet) {
+            width: 100%;
+        }
+    }
+    &__right {
+        width: 60%;
+        margin-bottom: 40px;
+        padding-left: 50px;
+        @include max-screen($tablet) {
+            width: 100%;
+            padding-left: 0;
+        }
+        h1 {
+            font-weight: bold;
+        }
+    }
+    &__rating {
+        margin-bottom: 20px;
+        img {
+            margin-right: 5px;
+            width: 16px;
+        }
+        span {
+            margin-left: 20px;
+            display: inline-block;
+            transform: translateY(2px);
+        }
+    }
+    &__seller {
+        margin-bottom: 15px;
+        img {
+            @include image-round(50px);
+            margin-right: 10px;
+        }
+        h5,
+        p {
+            margin-bottom: 0px;
+        }
+    }
+    &__price {
+        margin-bottom: 15px;
+        p {
+            margin-bottom: 5px;
+            text-decoration: line-through;
+        }
+        h4 {
+            color: $color-secondary;
+            font-weight: bold;
+        }
+    }
+    &__info {
+        margin-bottom: 40px;
+        h5 {
+            font-weight: bold;
+        }
+    }
+    &__actions {
+        span {
+            @extend %image-change;
+            display: inline-block;
+            border: 2px solid $color-border;
+            border-radius: $radius-md;
+            text-align: center;
+            width: 80px;
+            min-height: 50px;
+            line-height: 46px;
+            margin-right: 20px;
+            @include max-screen($tablet) {
+                min-height: 40px;
+                line-height: 33px;
+                width: 60px;
+                margin-right: 10px;
+            }
+            img {
+                width: 30px;
+                @include max-screen($tablet) {
+                    width: 22px;
+                }
+            }
+        }
+    }
+}

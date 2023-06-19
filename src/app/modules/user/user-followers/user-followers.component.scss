@@ -1,0 +1,55 @@
+@import '../../../../assets/scss/variables.scss';
+
+.followers {
+    &__head {
+        padding: 5px;
+        margin-bottom: 40px;
+        h5 {
+            font-weight: 600;
+            margin: 0 40px 0 0;
+            @include max-screen($mobile) {
+                margin: 0 0 15px;
+                width: 100%;
+            }
+        }
+        app-search-bar {
+            display: block;
+            max-width: 300px;
+            width: 100%;
+            @include max-screen($mobile) {
+                max-width: 100%;
+            }
+            ::ng-deep {
+                input {
+                    min-height: 50px !important;
+                }
+            }
+        }        
+    }
+    ul {
+        li {
+            width: calc(100%/8 - 10px);
+            margin: 0 10px 10px 0;
+            text-align: center;
+            @include max-screen($desktop-xl) {
+                width: calc(100%/5 - 10px);
+            }
+            @include max-screen($mobile) {
+                width: calc(100%/3 - 10px);
+            }
+            img {
+                @include image-round(100px);
+                margin-bottom: 7px;
+                box-shadow: $shadow-card;
+                @include max-screen($desktop-xl) {
+                    width: 80px;
+                    height: 80px;
+                }
+            }
+            h6 {
+                font-weight: 600;
+                margin-bottom: 0;
+            }
+        }
+    }
+}

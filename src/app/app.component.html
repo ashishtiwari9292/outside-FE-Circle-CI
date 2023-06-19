@@ -1,0 +1,3 @@
+<app-header *ngIf="!hasRoute('verification')"></app-header>
+<router-outlet></router-outlet>
+<app-footer *ngIf="!hasRoute('user') && !hasRoute('verification')"></app-footer>

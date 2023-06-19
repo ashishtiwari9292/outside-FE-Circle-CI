@@ -1,0 +1,34 @@
+@import '../../../../assets/scss/variables.scss';
+
+.not-found {
+    text-align: center;
+    min-height: 80vh;
+    figure {
+        max-width: 360px;
+        margin: auto;
+        padding: 40px 15px;
+        img {
+            margin: 0 0 30px;
+            max-width: 300px;
+            width: 100%;
+            @include max-screen($desktop) {
+                max-width: 200px;
+            }
+        }
+        figcaption {
+            padding: 0 15px;
+            h1 {
+                font-size: 30px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            p {
+                margin-bottom: 40px;
+                line-height: 1.3;
+            }
+            button {
+                min-width: 160px;
+            }
+        }
+    }
+}

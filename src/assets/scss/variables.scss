@@ -1,0 +1,57 @@
+// colors
+$color-primary: #039ce0;
+$color-primary-dark: #017fb7;
+$color-primary-light: #81d8ff;
+$color-secondary: #88c107;
+$color-secondary-dark: #73a304;
+$color-gray: #8b8b8b;
+$color-gray-light: #e9e9e9;
+$color-gray-lighten: #F9FBFC;
+$color-white: #ffffff;
+$color-white-light: #fafafa;
+$color-white-dark: #f1f1f1;
+$color-black: #000000;
+$color-black-light: #32323e;
+$color-black-medium: #242429;
+$color-red: #d40023;
+$color-red-dark: #9e031d;
+$color-green: #008000;
+$color-border: #e2e2e2;
+$color-navy-blue: #101050;
+$color-blue-light: #e0ecf2;
+$color-green-light: #e5ecd5;
+$color-warings: #dd9f18;
+
+// base
+$base-font-family: "Proxima Nova";
+$base-font-secondary: "Segoe UI";
+$base-transition: all 0.3s ease-in-out;
+
+// breakpoints
+$small: 575px;
+$mobile: 767px;
+$tablet: 991px;
+$desktop: 1199px;
+$desktop-xl: 1499px;
+
+// Grid
+$gutter-base-xs: 10px;
+$gutter-base-sm: 20px;
+$gutter-base: 30px;
+$grid-column: 12;
+
+// border-radius
+$radius-md: 10px;
+$radius-lg: 50px;
+$radius-circled: 100%;
+
+// box-shadow
+$shadow: 0px 0px 10px rgba($color-black, 0.1);
+$shadow-card: 0 0 10px rgb($color-black, 25%);
+
+// image path
+$imgPath: "/assets/images/";
+
+// mixins
+@import "mixins";
+@import "form";

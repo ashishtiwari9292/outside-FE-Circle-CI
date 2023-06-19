@@ -1,0 +1,365 @@
+<div class="post" [ngClass]="className">
+  <div class="close" (click)="closePost()">
+    <img src="assets/images/close-gray.svg" alt="Close" />
+  </div>
+  <div class="post__container">
+    <div class="noPostFound" *ngIf="FourOFour">
+      <article>
+        <img src="assets/images/no-data.svg" alt="No Data Found" />
+        <h5>Post Not Found!</h5>
+      </article>
+    </div>
+    <div class="post__info" *ngIf="!FourOFour">
+      <button *ngIf="ownPost" type="button" role="cursor" title="Menu" mat-button [matMenuTriggerFor]="menu">
+        <img src="assets/images/line-dots.svg" alt="Menu" />
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before" class="header-acount">
+        <button mat-menu-item (click)="editPost()">Edit</button>
+        <button mat-menu-item (click)="deletePost()">Delete</button>
+      </mat-menu>
+      <app-skeleton *ngIf="isLoading" [type]="'post-details'"></app-skeleton>
+      <div class="post__body dflex" *ngIf="!isLoading">
+        <!-- left image -->
+        <div class="post__media">
+          <div class="post__media-inner">
+            <figure *ngIf="
+              postData.postDetails[selectedImageIndex].contentType == 'video' ||
+                postData.postDetails[selectedImageIndex].contentType == 'image';
+              else s3
+            ">
+              <img *ngIf="postData.postDetails[selectedImageIndex].contentType == 'image'"
+                [src]="postData.postDetails[selectedImageIndex].photoUrl" alt="{{ postData?.postTitle }}" />
+              <app-vjs-player *ngIf="postData.postDetails[0].contentType == 'video'" [controls]="true"
+                [autoplay]="false" [streamUrl]="getVideoUrl()"></app-vjs-player>
+            </figure>
+            <ng-template #s3>
+              <figure>
+                <img *ngIf="
+                  postData.postDetails[0].photoUrl.indexOf('/image/') != -1 || isImage(postData.postDetails[0].photoUrl)
+                " [src]="postData.postDetails[0].photoUrl" alt="{{ postData?.postTitle }}" />
+                <app-vjs-player *ngIf="postData.postDetails[0].photoUrl.indexOf('/video/') != -1" [controls]="true"
+                  [autoplay]="false" [streamUrl]="getVideoUrl()"></app-vjs-player>
+              </figure>
+            </ng-template>
+            <span class="post__media-tag"
+              [ngClass]="{'is-video': postData.postDetails[0].photoUrl.indexOf('/video/') != -1}"
+              *ngIf="postData.postDetails[0].redirectLink"
+              (click)="redirectToUrl(postData.postDetails[0].redirectLink)">
+              <img src="assets/images/share.png" alt="Open URL" />
+              {{
+              postData.postDetails[0].redirectLink.substring(
+                postData.postDetails[0].redirectLink.indexOf("//") + 2,
+                postData.postDetails[0].redirectLink
+                  .substring(
+                    postData.postDetails[0].redirectLink.indexOf("//") + 2
+                  )
+                  .indexOf("/") +
+                  postData.postDetails[0].redirectLink.indexOf("//") +
+                  2
+              )
+            }}</span>
+            <div class="postInfo">
+              <span> <img src="assets/images/info.svg" alt="info" /></span>
+              <div class="postInfo__content">
+                <div class="flex">
+                  <label>Address 1:</label>
+                  <p>{{postData?.postInfo?.add_1}}</p>
+                </div>
+                <div class="flex" *ngIf="postData?.postInfo?.add_2">
+                  <label>Address 2:</label>
+                  <p>{{postData?.postInfo?.add_2}}</p>
+                </div>
+                <div class="dflex">
+                  <label>City:</label>
+                  <p>{{postData?.postInfo?.city}}</p>
+                </div>
+                <div class="dflex">
+                  <label>Country:</label>
+                  <p>{{postData?.postInfo?.country}}</p>
+                </div>
+                <div class="dflex">
+                  <label>Max_price:</label>
+                  <p>{{postData?.postInfo?.max_price}}</p>
+                </div>
+                <div class="dflex">
+                  <label>Min_price:</label>
+                  <p>{{postData?.postInfo?.min_price}}</p>
+                </div>
+                <div class="dflex">
+                  <label>Postal code:</label>
+                  <p>{{postData?.postInfo?.postal_code}}</p>
+                </div>
+                <div class="dflex">
+                  <label>State:</label>
+                  <p>{{postData?.postInfo?.state}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="postNav">
+              <button (click)="arrowClick('prev')"><img src="assets/images/arrowLeft.svg" alt="arrow" /></button>
+              <button (click)="arrowClick('next')"><img src="assets/images/arrowRight.svg" alt="arrow" /></button>
+            </div>
+          </div>
+
+          <div class="postThumbnail">
+            <ul>
+              <ng-container *ngFor="let postDetail of postData.postDetails; let i=index ">
+                <li><img *ngIf="postDetail.contentType == 'image'" [src]="postDetail.photoUrl" class="" alt="Open URL"
+                    (click)="selectedImage(i)" /></li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="postChip dflex">
+            <span *ngIf="postData?.postInfo?.has_lodging">Lodging</span>
+            <span *ngIf="postData?.postInfo?.has_rv"> RV </span>
+            <span *ngIf="postData?.postInfo?.has_tent">Tent</span>
+          </div>
+        </div>
+        <!-- right content -->
+        <div class="post__content">
+          <div class="post__content-head flex alignCenter justifyBetween">
+            <aside class="flex alignCenter">
+              <img *ngIf="postData?.userInfo?.profilePic; else notFoundUser" [src]="postData?.userInfo?.profilePic"
+                [alt]="postData?.userInfo?.fullName" (click)="onUserClick(postData?.userInfo?.userName)"
+                role="cursor" />
+              <ng-template #notFoundUser>
+                <img src="assets/images/skelton-man-lg.png" alt="User" role="cursor" />
+              </ng-template>
+
+              <article role="cursor">
+                <h5 (click)="onUserClick(postData?.userInfo?.userName)">
+                  {{ postData?.userInfo?.fullName }}
+                </h5>
+                <!-- TODO: -->
+                <!-- <p>1k followers</p> -->
+
+                <button *ngIf="!ownPost" (click)="onFollow()" type="button" role="cursor"
+                  class="button green flex alignCenter" [disabled]="followLoader">
+                  {{
+                      followLoader
+                        ? "Loading..."
+                        : isFollowed
+                        ? "Unfollow"
+                        : "Follow"
+                    }}
+                  <div class="btn-loader" *ngIf="followLoader">
+                    <span class="btn-loader__dots"></span>
+                    <span class="btn-loader__dots"></span>
+                    <span class="btn-loader__dots"></span>
+                  </div>
+                </button>
+              </article>
+            </aside>
+          </div>
+          <h1>{{ postData?.postTitle }}</h1>
+          <p>{{ postData?.postDesc }}</p>
+
+          <!-- action buttons -->
+          <div class="post__content-actions dflex alignCenter">
+            <span role="cursor" (click)="onLike()" [ngClass]="{ active: isLiked, isLoading: postLikeLoader }">
+              <img src="assets/images/heart-green-o.svg" alt="Wishlist" />
+              <img src="assets/images/heart.svg" alt="Wishlist" />
+            </span>
+            <p *ngIf="likeCount">{{ likeCount }}</p>
+            <app-button (click)="onSave()" [buttonText]="isSaved ? 'Saved' : 'Save'" [loading]="saveLoader">
+            </app-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Start -->
+      <app-skeleton *ngIf="isLoading" [type]="'comments'"></app-skeleton>
+      <div class="post__comments" *ngIf="!isLoading">
+        <div class="post__comments-posting">
+          <figure class="flex alignStart">
+            <img *ngIf="userProfilePic; else notFound" [src]="userProfilePic" alt="" />
+            <ng-template #notFound>
+              <img src="assets/images/skelton-man-md.png" alt="User" />
+            </ng-template>
+            <div class="field-group">
+              <input maxlength="250" #commentInputRef [(ngModel)]="commentInput" (keyup.enter)="postComment()"
+                type="text" placeholder="Add a comment" [disabled]="addCommentLoader" />
+            </div>
+          </figure>
+          <aside>
+            <app-button [passedClass]="'button'" (click)="postComment()" [disabled]="commentInputRef.value.trim() == ''"
+              [buttonText]="addCommentLoader ? 'Posting' : 'Post'" [loading]="addCommentLoader"></app-button>
+          </aside>
+        </div>
+        <h5 role="cursor">{{ totalComments == 1 ? '1 Comment' : totalComments + ' Comments' }}</h5>
+        <ul>
+          <li *ngFor="let data of parentComments; let i = index">
+            <figure class="flex alignCenter">
+              <img [src]="data.profilePic || 'assets/images/skelton-man-md.png'" alt="data.username" />
+              <figcaption>
+                <h6>
+                  <span>{{ data.username }}</span>
+                </h6>
+                <p>{{ data.updatedAt | timeElapsed }}</p>
+              </figcaption>
+            </figure>
+            <article>
+              {{ data.comment }}
+            </article>
+            <ol class="dflex">
+              <li class="likesCount">
+                <button type="button" role="cursor" title="Like" (click)="onCommentLike(data.id, true, i)"
+                  [ngClass]="{ commentLiked: data.isLiked, isLoading: commentLikeLoaderMap.get(data.id) || false }">
+                  <img src="assets/images/heart-o.svg" alt="Like" />
+                  <img src="assets/images/heart-red.svg" alt="Like" />
+                  <span>{{ data.likeCount }}</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" role="cursor" title="Reply" (click)="loadChildComments(data.id, 1, 5, i, true)">
+                  <img src="assets/images/reply.svg" alt="Reply" />
+                  <span>{{ data.commentCount }}</span>
+                </button>
+              </li>
+              <li class="is-delete">
+                <button type="button" role="cursor" title="Delete"
+                  [ngClass]="{ isLoading: deleteCommentLoader.get(data.id) || false }" (click)="deleteComment(data.id)"
+                  *ngIf="(loggedinUserData?.username == data?.username) || ownPost">
+                  <img src="assets/images/delete-2.svg" alt="Delete" />
+                </button>
+              </li>
+            </ol>
+            <!-- Child comment Start-->
+            <ng-container *ngIf="showReplyField[i]">
+              <div class="repliedInput">
+                <div class="field-group">
+                  <input #replyInputRef appAutoFocus [isFocus]="true" maxlength="250" type="text" (keyup.enter)="
+                      postReply(data.id, data.pageIndex, data.pageSize)
+                    " placeholder="Add a comment" [(ngModel)]="replyInput" [disabled]="addReplyLoader" />
+                </div>
+                <aside>
+                  <button class="button" [disabled]="replyInputRef.value.trim() == ''"
+                    (click)="postReply(data.id, data.pageIndex, data.pageSize)">
+                    {{ addReplyLoader ? "Replying..." : "Reply" }}
+                  </button>
+                </aside>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="
+                data.childComments &&
+                data.childComments.length > 0 &&
+                showReplyField[i]
+              ">
+              <ul>
+                <li *ngFor="let childData of data.childComments; let j = index">
+                  <figure class="flex alignCenter">
+                    <img [src]="
+                        childData.profilePic ||
+                        'assets/images/skelton-man-md.png'
+                      " alt="childData.username" />
+                    <figcaption>
+                      <h6>
+                        <span>{{ childData.username }}</span>
+                      </h6>
+                      <p>{{ childData.updatedAt | timeElapsed }}</p>
+                    </figcaption>
+                  </figure>
+                  <article>
+                    {{ childData.comment }}
+                  </article>
+                  <ol class="dflex">
+                    <li class="likesCount">
+                      <button type="button" role="cursor" title="Like"
+                        (click)="onCommentLike(childData.id, false, i, j)"
+                        [ngClass]="{ commentLiked: childData.isLiked, isLoading: commentLikeLoaderMap.get(childData.id) || false }">
+                        <img src="assets/images/heart-gray-outline.svg" alt="Like" />
+                        <img src="assets/images/heart-red-filled.svg" alt="Like" />
+                        <span>{{ childData.likeCount }}</span>
+                      </button>
+                    </li>
+                    <li class="is-trash">
+                      <button type="button" role="cursor" title="Delete"
+                        [ngClass]="{ isLoading: deleteCommentLoader.get(childData.id) || false }"
+                        (click)="deleteComment(childData.id)"
+                        *ngIf="(loggedinUserData?.username == childData?.username) || ownPost">
+                        <img src="assets/images/delete-2.svg" alt="Delete" />
+                      </button>
+                    </li>
+                  </ol>
+                </li>
+              </ul>
+              <!-- comment count -->
+              <span class="post__comments-count" role="cursor" *ngIf="
+                  data &&
+                  data.commentCount > 5 &&
+                  data.commentCount - shownChildCommentsCount > 0
+                " (click)="loadChildComments(data.id)">{{ data.commentCount - shownChildCommentsCount }}
+                comments
+              </span>
+            </ng-container>
+            <app-skeleton *ngIf="isLoadingChildComments && loadingCommentId == data.id" [type]="'comments'">
+            </app-skeleton>
+          </li>
+        </ul>
+        <app-skeleton *ngIf="isLoadingComments" [type]="'comments-list'"></app-skeleton>
+        <span class="post__comments-count" role="cursor" *ngIf="
+            parentCommentCount > 2 &&
+            parentCommentCount - shownCommentsCount > 0
+            && !isLoadingComments
+          " (click)="loadParentComments()">{{ parentCommentCount - shownCommentsCount }} comments</span>
+        <app-skeleton *ngIf="isLoadingMoreComments" [type]="'comments-list'"></app-skeleton>
+        <!-- Post Reply Comment -->
+      </div>
+    </div>
+  </div>
+
+  <!-- similar section -->
+  <div class="post__similar" *ngIf="(similarPosts && similarPosts.length) || isLoadingSimilarPosts">
+    <h3>Similar Posts</h3>
+    <div class="gallery">
+      <div class="gallery__toggles">
+        <button type="button" [ngClass]="{ active: !gridLayout }" (click)="gridLayout = false">
+          <img src="assets/images/masonary-gray-btn.png" alt="Masonry" />
+          <img src="assets/images/masonary-blue-btn.png" alt="Masonry" />
+        </button>
+        <button type="button" [ngClass]="{ active: gridLayout }" (click)="gridLayout = true">
+          <img src="assets/images/grid-gray-btn.png" alt="Grid" />
+          <img src="assets/images/grid-blue-btn.png" alt="Grid" />
+        </button>
+      </div>
+      <div class="gallery__skelton dflex" *ngIf="isLoading">
+        <div class="gallery__skelton-item" *ngFor="let i of [].constructor(4)">
+          <app-skeleton height="250px"></app-skeleton>
+        </div>
+      </div>
+      <div class="gallery__grid dflex" *ngIf="similarPosts && gridLayout" infiniteScroll [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="150" (scrolled)="onScroll()">
+        <ng-container *ngFor="let post of similarPosts">
+          <app-image-card [dashboardPostData]="post" [isSaved]="post.isSaved || false" [isLoggedIn]="isLoggedIn"
+            (onSave)="onSaveClick($event)">
+          </app-image-card>
+        </ng-container>
+      </div>
+      <div class="gallery__masonry" *ngIf="similarPosts && !gridLayout">
+        <ngx-masonry [updateLayout]="true" [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150" infiniteScroll
+          (scrolled)="onScroll()">
+          <ngxMasonryItem *ngFor="let post of similarPosts" class="gallery__masonry-item">
+            <app-image-card [dashboardPostData]="post" [isSaved]="post.isSaved || false" [isLoggedIn]="isLoggedIn"
+              (onSave)="onSaveClick($event)">
+            </app-image-card>
+          </ngxMasonryItem>
+        </ngx-masonry>
+      </div>
+      <div class="gallery__loading">
+        <button *ngIf="loadingMore" class="button sm link">
+          Loading
+          <div class="btn-loader">
+            <span class="btn-loader__dots"></span>
+            <span class="btn-loader__dots"></span>
+            <span class="btn-loader__dots"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="post__similar-skelton dflex" *ngIf="!similarPosts">
+      <div class="post__similar-skelton-item" *ngFor="let i of [].constructor(4)">
+        <app-skeleton height="250px"></app-skeleton>
+      </div>
+    </div>
+  </div>
+</div>

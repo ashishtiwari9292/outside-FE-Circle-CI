@@ -1,0 +1,115 @@
+@import "../../../assets/scss/variables.scss";
+.launch {
+    @include background-image(bg-blue-gradient, png, center, cover);
+    min-height: 100vh;
+    a {
+        color: $color-white;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    &__container {
+        width: 100%;
+        max-width: 2000px;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+    &__left {
+        width: 45%;
+        padding: 60px 40px;
+        @include max-screen($desktop-xl) {
+            padding: 40px;
+        }
+        @include max-screen($desktop) {
+            width: 50%;
+        }
+        @include max-screen($tablet) {
+            width: 100%;
+            text-align: center;
+            padding: 30px 0;
+        }
+        figure {
+            max-width: 250px;
+            width: 100%;
+            @include max-screen($tablet) {
+                max-width: 200px;
+                margin: 0 auto 50px;
+            }
+        }
+        article {
+            max-width: 640px;
+            @include max-screen($tablet) {
+                max-width: 100%;
+                margin: 0 auto 30px;
+            }
+            h5 {
+                margin-bottom: 10px;
+                color: $color-white;
+                span {
+                    padding-left: 35px;
+                    position: relative;
+                    &::before {
+                        content: "";
+                        width: 30px;
+                        height: 2px;
+                        background-color: $color-white;
+                        position: absolute;
+                        left: 0;
+                        top: 10px;
+                    }
+                }
+            }
+            h1 {
+                font-weight: 900;
+                margin-bottom: 20px;
+                color: $color-white;
+                @include min-screen($tablet) {
+                    font-size: 30px;
+                }
+                @include min-screen($desktop) {
+                    font-size: 45px;
+                }
+            }
+            form {
+                @extend %form;
+                position: relative;
+                @include max-screen($tablet) {
+                    text-align: left;
+                }
+            }
+        }
+        & > p {
+            font-size: 14px;
+            color: $color-white;
+            margin-bottom: 0;
+        }
+    }
+    &__right {
+        width: 55%;
+        padding: 60px 40px;
+        text-align: center;
+        @include max-screen($desktop-xl) {
+            padding: 40px;
+        }
+        @include max-screen($desktop) {
+            width: 50%;
+        }
+        @include max-screen($tablet) {
+            width: 100%;
+            padding: 0 0 30px;
+        }
+        figure {
+            max-width: 840px;
+            margin: auto;
+            @include max-screen($tablet) {
+                max-width: 100%;
+            }
+            img {
+                margin-bottom: 30px;
+            }
+            figcaption {
+                font-size: 14px;
+            }
+        }
+    }
+}

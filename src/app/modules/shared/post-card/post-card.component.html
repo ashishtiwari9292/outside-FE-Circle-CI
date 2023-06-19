@@ -1,0 +1,81 @@
+<div class="post-card" *ngIf="!isLoading">
+    <div class="post-card__head flex alignCenter justifyBetween">
+        <aside class="flex alignCenter">
+            <img [src]="postCardData?.userData?.profilePic" alt="postCardData.userData.fullName"
+                *ngIf="postCardData?.userData?.profilePic && post" />
+            <img src="assets/images/skelton-man-md.png" alt="By Shoe World" *ngIf="!postCardData?.userData?.profilePic" />
+            <article>
+                <h5>{{ postCardData?.userData?.fullName }}</h5>
+                <p>{{ postCardData.updatedDate | timeElapsed }}</p>
+            </article>
+        </aside>
+        <button *ngIf="ownProfile" type="button" role="cursor" title="Menu" mat-button [matMenuTriggerFor]="menu">
+            <img src="assets/images/line-dots.svg" alt="Menu" />
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before" class="header-acount">
+            <button mat-menu-item (click)="editPost()">Edit</button>
+            <button mat-menu-item (click)="deletePost()">Delete</button>
+        </mat-menu>
+    </div>
+    <div role="cursor">
+        <figure [ngClass]="{videoWrap:
+            postCardData.postDetails[0].photoUrl.indexOf('/video/') != -1 || postCardData.postDetails[0].contentType == 'video'}">
+            <ng-container *ngIf="postCardData.postDetails[0].contentType == 'video' || postCardData.postDetails[0].contentType == 'image';else s3">
+                <img (click)="onPostClick(postCardData.id)"  *ngIf="postCardData.postDetails[0].contentType == 'image'" [src]="postCardData.postDetails[0].photoUrl" alt="postCardData.postTitle" />
+            <!-- <video *ngIf="postCardData.postDetails[0].contentType == 'video'" [src]="postCardData.postDetails[0].photoUrl" height="200" controls></video> -->
+            <app-vjs-player [id]="postCardData.id" *ngIf="postCardData.postDetails[0].contentType == 'video'" [controls]="true" [autoplay]="false" [streamUrl]="getVideoUrl()"></app-vjs-player>
+            </ng-container>
+            <ng-template #s3>
+                <img (click)="onPostClick(postCardData.id)"  *ngIf="postCardData.postDetails[0].photoUrl.indexOf('/image/')
+                    != -1 || isImage(postCardData.postDetails[0].photoUrl)" [src]="postCardData.postDetails[0].photoUrl" alt="postCardData.postTitle" />
+                    <app-vjs-player [id]="postCardData.id" *ngIf="postCardData.postDetails[0].photoUrl.indexOf('/video/') != -1" [controls]="true" [autoplay]="false" [streamUrl]="getVideoUrl()"></app-vjs-player>
+            </ng-template>
+        </figure>
+        <div (click)="onPostClick(postCardData.id)" class="post-card__content">
+            <h5>{{ postCardData.postTitle }}</h5>
+            <p>{{ postCardData.postDesc }}</p>
+        </div>
+    </div>
+    <ul class="dflex">
+        <li (click)="onLikeClick($event)">
+            <button [ngClass]="{ isLoading: likeLoader}" type="button" role="cursor" title="Like">
+                <img *ngIf="!isLiked" src="assets/images/heart-gray-outline.svg" alt="Like" />
+                <img src="assets/images/heart-red-filled.svg" alt="Like" />
+                <span>{{ likeCount }}</span>
+            </button>
+        </li>
+        <li>
+            <button (click)="onPostClick(postCardData.id)" type="button" role="cursor" title="Comment">
+                <img src="assets/images/comment-gray.svg" alt="Comment" />
+                <span>{{ postCardData.commentCount }}</span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<!-- skeleton -->
+<div class="post-card" *ngIf="isLoading">
+    <div class="post-card__head flex alignCenter justifyBetween">
+        <aside class="flex alignCenter">
+            <app-skeleton type="circle" width="50px" height="50px" margin="0 10px 0 0"></app-skeleton>
+            <article>
+                <app-skeleton width="50px" height="10px" margin="0 0 10px"></app-skeleton>
+                <app-skeleton width="80px" height="10px"></app-skeleton>
+            </article>
+        </aside>
+        <app-skeleton width="50px" height="10px"></app-skeleton>
+    </div>
+
+    <app-skeleton height="200px" margin="5px 0 10px"></app-skeleton>
+    <app-skeleton height="10px" width="30%" margin="5px 0"></app-skeleton>
+    <app-skeleton height="10px" width="50%" margin="5px 0 15px"></app-skeleton>
+
+    <ul class="dflex">
+        <li>
+            <app-skeleton height="10px" width="50px"></app-skeleton>
+        </li>
+        <li>
+            <app-skeleton height="10px" width="50px"></app-skeleton>
+        </li>
+    </ul>
+</div>

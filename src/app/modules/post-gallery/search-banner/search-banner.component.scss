@@ -1,0 +1,61 @@
+@import '../../../../assets/scss/variables.scss';
+.search-banner {
+    z-index: 1;
+    position: relative;
+    padding-top: 70px;
+    @include background-image(search-banner, png, center top, cover, no-repeat);
+    &::after {
+        bottom: 0;
+        left: 0;
+        content: '';
+        z-index: -1;
+        width: 100%;
+        height: 82px;
+        display: block;
+        position: absolute;
+        background-color: $color-gray-lighten;
+        @include max-screen($tablet){
+            height: 65px;
+        }
+    }
+    h1 {
+        font-weight: 500;
+        color: $color-white;
+        margin-bottom: 52px;
+        @include max-screen($tablet){
+            margin-bottom: 20px;
+        }
+        @include max-screen($small){
+            font-size: 25px;
+        }
+    }
+    &__outer {
+        padding: 40px 0 30px;
+        @include max-screen($desktop-xl){
+            padding: 30px 0;
+        }
+        @include max-screen($desktop){
+            padding: 30px 0;
+        }
+    }
+    &__logo {
+        width: 40vw;
+        max-width: 510px;
+        margin-bottom: 20px;
+    }
+    &__wrap {
+        margin: 0 auto;
+        max-width: 960px;
+    }
+    &__input {
+        padding: 6px;
+        margin: 0 auto;
+        max-width: 900px;
+        position: relative;
+        border-radius: 50px;
+        background: transparent linear-gradient(180deg, $color-secondary 0%, $color-primary 100%) 0% 0% no-repeat;
+        @include max-screen($tablet){
+           padding: 4px;
+        }
+    }
+}

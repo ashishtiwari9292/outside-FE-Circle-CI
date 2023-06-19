@@ -1,0 +1,106 @@
+<div class="followers">
+    <mat-tab-group (selectedTabChange)="onTabClick($event)">
+        <!-- followers tab -->
+        <mat-tab label="Followers">
+
+            <!-- header -->
+            <div class="followers__head dflex alignCenter">
+                <app-skeleton 
+                    *ngIf="isLoadingFollowing" 
+                    width="90px" 
+                    height="20px" 
+                    margin="0 15px 10px 0">
+                </app-skeleton>
+                <h5 *ngIf="!isLoadingFollowers">{{ followersList.count }} followers</h5>
+
+                <!-- search -->
+                <app-search-bar (isLoading)="setLoadingFollowers($event)"
+                    (followers)="onFollowerSearch($event)"
+                    [username]="currentUsername" [searchType]="'followed'">
+                </app-search-bar>
+            </div>
+
+            <!-- followers list -->
+            <ul class="dflex" infiniteScroll [infiniteScrollDistance]="2"
+                [infiniteScrollThrottle]="150"
+                (scrolled)="onScroll()">
+                <ng-container *ngIf="!isLoadingFollowers">
+                    <li *ngFor="let data of followersList.data">
+                        <a (click)="onUserClick(data.username)" role="cursor">
+                            <img [src]="data.photoUrl ||
+                                'assets/images/skelton-man-md.png'" alt="User" />
+                            <h6>{{ data.fullName }}</h6>
+                            <p>{{ data.username }}</p>
+                        </a>
+                    </li>
+                </ng-container>
+
+                <!-- followers list skeleton -->
+                <ng-container *ngIf="isLoadingFollowers">
+                    <li *ngFor="let i of [].constructor(10)">
+                        <app-skeleton type="circle" width="100px" height="100px" margin="0 auto 10px"></app-skeleton>
+                        <app-skeleton width="80%" height="10px" margin="0 auto"></app-skeleton>
+                    </li>
+                </ng-container>
+            </ul>
+
+             <!-- no data -->
+            <div class="noPostFound" *ngIf="!isLoadingFollowers && (!followersList.data || followersList.data.length == 0)">
+                <article>
+                    <img src="assets/images/no-data.svg" alt="No Data Found" />
+                    <h5>No followers found!</h5>
+                </article>
+            </div>
+        </mat-tab>
+        <!-- following tab -->
+        <mat-tab label="Following">
+            <div class="followers__head dflex alignCenter">
+                <app-skeleton
+                    *ngIf="isLoadingFollowing" 
+                    width="90px"
+                    height="20px" 
+                    margin="0 15px 10px 0">
+                </app-skeleton>
+                <h5 *ngIf="!isLoadingFollowing">{{ followingList?.count}} following</h5>
+                <app-search-bar
+                    (isLoading)="setLoadingFollowing($event)"
+                    (following)="onFollowingSearch($event)"
+                    [username]="currentUsername"
+                    [searchType]="'following'">
+                </app-search-bar>
+            </div>
+
+            <!-- following list -->
+            <ul class="dflex" infiniteScroll [infiniteScrollDistance]="2"
+                [infiniteScrollThrottle]="150" (scrolled)="onScroll()">
+                <ng-container *ngIf="!isLoadingFollowing">
+                    <li *ngFor="let data of followingList.data">
+                        <a (click)="onUserClick(data.username)" role="cursor">
+                            <img [src]="data.photoUrl || 'assets/images/skelton-man-md.png'" alt="User"/>
+                            <h6>{{ data.fullName }}</h6>
+                            <p>{{ data.username }}</p>
+                        </a>
+                    </li>
+                </ng-container>
+
+                
+                <!-- following list skeleton -->
+                <ng-container *ngIf="isLoadingFollowing">
+                    <li *ngFor="let i of [].constructor(10)">
+                        <app-skeleton type="circle" width="100px" height="100px" margin="0 auto 10px"></app-skeleton>
+                        <app-skeleton width="80%" height="10px" margin="0 auto"></app-skeleton>
+                    </li>
+                </ng-container>
+            </ul>
+
+            <!-- no data -->
+            <div class="noPostFound" *ngIf="!isLoadingFollowing &&
+                (!followingList.data || followingList.data.length == 0)">
+                <article>
+                    <img src="assets/images/no-data.svg" alt="No Data Found">
+                    <h5>No followers found!</h5>
+                </article>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

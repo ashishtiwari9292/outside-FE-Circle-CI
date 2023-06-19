@@ -1,0 +1,43 @@
+@import "../../../../assets/scss/variables.scss";
+
+.login-form {
+    form {
+        @extend %form;
+    }
+    &__link {
+        font-size: 14px;
+        margin-left: auto;
+        color: $color-primary-light;
+        &:hover {
+            color: $color-white;
+        }
+    }
+    &__signup {
+        font-size: 16px;
+        margin-top: 12px;
+        display: inline-block;
+        color: $color-primary-light;
+        &:hover {
+            color: $color-white;
+        }
+    }
+    .custom-checkbox {
+        span {
+            color: $color-white;
+            &::before {
+                border: 0 !important;
+            }
+        }
+    }
+    &__accept {
+        margin-bottom: 20px;
+    }
+    ::ng-deep {
+        .button {
+            font-weight: 400;
+        }
+        .error {
+            color: $color-white !important;
+        }
+    }
+}

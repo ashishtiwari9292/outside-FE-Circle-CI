@@ -1,0 +1,92 @@
+@import "../../../../assets/scss/variables.scss";
+
+.searchResult {
+    min-height: calc(100vh - 300px);
+    background-color: $color-white-light;
+    &__container {
+        width: 100%;
+        max-width: 1170px;
+        padding: 30px 15px;
+        margin: 0 auto;
+    }
+    &__box {
+        padding: 25px;
+        margin-bottom: 30px;
+        border-radius: $radius-md;
+        background-color: $color-white;
+        h5 {
+            font-weight: 600;
+        }
+        ul {
+            &.people {
+                li {
+                    padding: 15px 0;
+                    border-bottom: 1px solid $color-border;
+                    @include max-screen($mobile) {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+                    figure {
+                        margin: 10px 0;
+                        & > img {
+                            @include image-round(80px);
+                            margin-right: 15px;
+                        }
+                        figcaption {
+                            h6,
+                            p {
+                                margin: 0;
+                            }
+                            h6 {
+                                font-size: 16px;
+                                font-weight: 600;
+                            }
+                            p {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                    aside {
+                        text-align: center;
+                        button {
+                            min-width: 110px;
+                            min-height: 40px;
+                            margin: 0 0 0 10px;
+                            @include max-screen($mobile) {
+                                min-width: 90px;
+                                margin: 0 10px 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+            &.posts {
+                margin: 0 -15px;
+                @include max-screen($mobile) {
+                    margin: 0;
+                }
+                li {
+                    width: calc(100% / 3);
+                    padding: 0 15px;
+                    margin-bottom: 30px;
+                    @include max-screen($desktop) {
+                        width: calc(100% / 2);
+                    }
+                    @include max-screen($mobile) {
+                        width: calc(100% / 1);
+                        padding: 0;
+                    }
+                }
+            }
+        }
+        .button {
+            .btn-loader__dots {
+                background-color: $color-primary;
+            }
+        }
+    }
+    &__viewAll {
+        padding-top: 20px;
+        text-align: center;
+    }
+}

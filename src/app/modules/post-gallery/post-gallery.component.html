@@ -1,0 +1,68 @@
+<app-search-banner></app-search-banner>
+<div class="dashboard" (click)="closePost()">
+    <div class="container dashboard__wrap">
+    <app-category [slider]="true" [selectedCategory]="category"></app-category>
+    <!-- <app-sub-category></app-sub-category> -->
+
+    <div class="gallery">
+        <!---Gallery Toggles--->
+        <div class="gallery__toggles">
+            <button type="button" [ngClass]="{ active: !gridLayout }" (click)="gridLayout= false">
+                <img src="assets/images/masonary-gray-btn.png" alt="Masonry" />
+                <img src="assets/images/masonary-blue-btn.png" alt="Masonry" />
+            </button>
+            <button type="button" [ngClass]="{ active: gridLayout }" (click)="gridLayout= true">
+                <img src="assets/images/grid-gray-btn.png" alt="Grid" />
+                <img src="assets/images/grid-blue-btn.png" alt="Grid" />
+            </button>
+        </div>
+        <!---Gallery Skeleton--->
+        <div class="gallery__skelton dflex" *ngIf="isLoading">
+            <div class="gallery__skelton-item" *ngFor="let i of [].constructor(12)">
+                <app-skeleton height="250px"></app-skeleton>
+            </div>
+        </div>
+        <!---Gallery Grid--->
+        <div class="gallery__grid dflex" *ngIf="allPosts && gridLayout" infiniteScroll [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="150" (scrolled)="onScroll()">
+            <ng-container *ngFor="let post of allPosts">
+                <app-image-card [saveLoader]="saveLoaderMap.get(post.id) || false" [bigPlayButton]="false" [dashboardPostData]="post" [isSaved]="post.isSaved || false" [isLoggedIn]="isLoggedIn"
+                    (onSave)="onSaveClick($event)" (onClick)="onCardClick($event)">
+                </app-image-card>
+            </ng-container>
+        </div>
+        <!---Gallery Masonry--->
+        <div class="gallery__masonry" *ngIf="allPosts && !gridLayout">
+            <ngx-masonry [options]="masonryOptions" [updateLayout]="updateMasonryLayout" [infiniteScrollDistance]="2"
+                [infiniteScrollThrottle]="150" infiniteScroll (scrolled)="onScroll()">
+                <ngxMasonryItem *ngFor="let post of allPosts" class="gallery__masonry-item">
+                    <app-image-card [saveLoader]="saveLoaderMap.get(post.id) || false" [bigPlayButton]="false" [dashboardPostData]="post" [isSaved]="post.isSaved || false"
+                        [isLoggedIn]="isLoggedIn" (onSave)="onSaveClick($event)"  (onClick)="onCardClick($event)">
+                    </app-image-card>
+                </ngxMasonryItem>
+            </ngx-masonry>
+        </div>
+        <!---Gallery Load More--->
+        <div class="gallery__loading">
+            <button *ngIf="loadingMore" class="button sm link">
+                Loading
+                <div class="btn-loader">
+                    <span class="btn-loader__dots"></span>
+                    <span class="btn-loader__dots"></span>
+                    <span class="btn-loader__dots"></span>
+                </div>
+            </button>
+        </div>
+        <!---Gallery No Post--->
+        <div class="noPostFound" *ngIf="!isLoading && (!allPosts ||
+            allPosts.length == 0)">
+            <article>
+                <img src="assets/images/no-data.svg" alt="No Data Found">
+                <h5>No Posts Found!</h5>
+            </article>
+        </div>
+    </div>
+    <div class="dashboard__overlay"></div>
+</div>
+</div>
+<app-post #postComp *ngIf="selectedPostId" [postId]="selectedPostId" className="drawer"></app-post>

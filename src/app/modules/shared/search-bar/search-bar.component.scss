@@ -1,0 +1,132 @@
+@import "../../../../assets/scss/variables.scss";
+
+.search-bar {
+    @extend %form;
+    position: relative;
+    input {
+        padding-left: 35px !important;
+        min-height: 40px !important;
+    }
+    button {
+        @extend %button-type-remove;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            width: 12px;
+        }
+    }
+    &__skeleton {
+        margin: 10px 0;
+    }
+    &--header {
+        input {
+            height: 50px;
+            padding-right: 50px !important;
+            padding-left: 20px !important;
+            @include max-screen($mobile) {
+                height: 40px;
+            }
+            &::placeholder {
+                opacity: 0.5 !important;
+                color: $color-black !important;
+            }
+        }
+        button {
+            right: 0;
+            width: 50px;
+            left: auto;
+            img {
+                width: 18px;
+            }
+        }
+    }
+    &--home {
+        input[type="search"] {
+            border: 0;
+            width: 100%;
+            height: 70px;
+            outline: none;
+            font-size: 20px;
+            appearance: none;
+            color: $color-gray;
+            border-radius: 50px;
+            padding: 5px 180px 5px 50px;
+            background-color: $color-white;
+            @include max-screen($mobile) {
+                height: 60px;
+                font-size: 18px;
+                padding: 5px 120px 5px 20px;
+            }
+            &::placeholder {
+                color: $color-gray;
+            }
+        }
+        button {
+            border: 0;
+            left: auto;
+            right: 100px;
+            width: 100px;
+            outline: none;
+            cursor: pointer;
+            background-color: transparent;
+            @include max-screen($mobile) {
+                width: 60px;
+                right: 70px;
+            }
+            img {
+                width: 23px;
+                @include max-screen($mobile) {
+                    width: 18px;
+                }
+            }
+        }
+    }
+    &--cat {
+        input[type="search"] {
+            border: 0;
+            width: 100%;
+            height: 88px;
+            outline: none;
+            font-size: 20px;
+            appearance: none;
+            color: $color-gray;
+            border-radius: 50px;
+            padding: 5px 80px 5px 40px;
+            background-color: $color-white;
+            @include max-screen($tablet){
+                height: 60px;
+                padding: 5px 50px 5px 25px;
+            }
+            &::placeholder {
+                color: $color-gray;
+            }
+        }
+        button {
+            top: 0;
+            right: 0;
+            border: 0;
+            left: auto;
+            height: 100%;
+            width: 120px;
+            outline: none;
+            cursor: pointer;
+            transform: none;
+            appearance: none;
+            position: absolute;
+            border-radius: 50px;
+            background-color: transparent;
+            @include max-screen($tablet){
+                width: 80px;
+            }
+            img {
+                width: 23px;
+            }
+        }
+    }
+}

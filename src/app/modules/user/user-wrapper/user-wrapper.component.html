@@ -1,0 +1,73 @@
+<div class="user dflex">
+    <div class="user__overlay" (click)="closeSideBar()"></div>
+    <!---Need to close side on click for mobile view-->
+    <div class="user__left">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="user__middle" [ngClass]="{
+        full:
+        hasRoute('user/wishlist') ||
+        hasRoute('user/followers') ||
+        hasRoute('user/posts')
+        }">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="user__right" *ngIf="!hasRoute('user/wishlist') &&
+        !hasRoute('user/followers') &&
+        !hasRoute('user/posts')">
+        <div *ngIf="((!isLoadingPosts && trendingPosts && trendingPosts.length>
+            0) || isLoadingPosts)" class="user__right-trending">
+            <h5>Trending feeds</h5>
+            <ul class="dflex">
+                <ng-container *ngIf="!isLoadingPosts && trendingPosts &&
+                    trendingPosts.length> 0">
+                    <li *ngFor="let post of trendingPosts" (click)="onPostClick(post.id)">
+                        <img *ngIf="post.content_type &&
+                            post.content_type.indexOf('image') != -1" [src]="post.photo_url
+                            || 'assets/images/skelton-card-2.svg'" alt="Feed" />
+                        <video *ngIf="post.content_type &&
+                            post.content_type.indexOf('video/') != -1" [src]="post.photo_url
+                            || 'assets/images/skelton-card-2.svg'">
+                        </video>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="!isLoadingPosts && (!trendingPosts ||
+                    trendingPosts.length == 0)">
+                    <li *ngFor="let i of [].constructor(4)">
+                        <img *ngIf="!isLoadingPosts" src="assets/images/skelton-card-2.svg" alt="Feed" />
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="isLoadingPosts">
+                    <li *ngFor="let i of [].constructor(4)">
+                        <app-skeleton height="95px"></app-skeleton>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+        <div *ngIf="isLoggedIn && ((!isLoadingUsers && suggestedUsers &&
+            suggestedUsers.length> 0) || isLoadingUsers)" class="user__right-suggestions">
+            <h5>Suggested for you</h5>
+            <ul>
+                <ng-container *ngIf="!isLoadingUsers">
+                    <li class="flex alignCenter" *ngFor="let user of
+                        suggestedUsers" (click)="onUserClick(user.username)">
+                        <img [src]="user.photo_url ||'assets/images/skelton-man-md.png'" alt="user.username" />
+                        <article>
+                            <h5>{{user.fullname}}</h5>
+                            <p>{{user.username}}</p>
+                        </article>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="isLoadingUsers">
+                    <li class="flex alignCenter" *ngFor="let i of [].constructor(4)">
+                        <app-skeleton [type]="'circle'" width="50px" height="50px" margin="0 20px 0 0"></app-skeleton>
+                        <article>
+                            <app-skeleton width="100px" height="10px" margin="0 0 10px 0"></app-skeleton>
+                            <app-skeleton width="50px" height="10px"></app-skeleton>
+                        </article>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</div>

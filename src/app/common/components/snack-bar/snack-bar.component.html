@@ -1,0 +1,9 @@
+<div class="snackBar {{getIcon.type}}" [ngClass]="{'outline' : data.outline}">
+    <div class="snackBar__content">
+        <img [src]="getIcon.src" />
+        <span>{{data.message}}</span>
+    </div>
+    <div class="snackBar__close" (click)="closeSnackbar()">
+        Close
+    </div>
+</div>

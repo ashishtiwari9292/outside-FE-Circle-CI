@@ -1,0 +1,31 @@
+<div class="user-whishlist" *ngIf="!isLoading">
+    <ul class="dflex" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll()">
+        <li *ngFor="let post of allPosts" class="flex">
+            <app-image-card [fromWishList]="true" [savedPostData]="post" [isSaved]="true" [isLoggedIn]="isLoggedIn"
+                (onSave)="unSavePost($event)">
+            </app-image-card>
+        </li>
+    </ul>
+    <div *ngIf="loadingMore" class="user-whishlist__loading">
+        <button class="button sm link">
+            Loading
+            <div class="btn-loader">
+                <span class="btn-loader__dots"></span>
+                <span class="btn-loader__dots"></span>
+                <span class="btn-loader__dots"></span>
+            </div>
+        </button>
+    </div>
+</div>
+<div class="user-whishlist__skelton dflex" *ngIf="isLoading">
+    <div class="user-whishlist__skelton-item" *ngFor="let i of [].constructor(8)">
+        <app-skeleton height="250px"></app-skeleton>
+    </div>
+</div>
+<div class="noPostFound" *ngIf="!isLoading && (!allPosts || allPosts.length == 0)">
+    <article>
+        <img src="assets/images/no-data.svg" alt="No Data Found">
+        <h5>No items added in the wishlist.</h5>
+    </article>
+</div>

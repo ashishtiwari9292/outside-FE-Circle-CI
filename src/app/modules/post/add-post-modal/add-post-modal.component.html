@@ -1,0 +1,154 @@
+<div class="dialog__wrap">
+  <div class="dialog__head">
+    <h4 *ngIf="modalType == 'add'">
+      Create
+      {{ currentStep == 1 ? "" : postType == "video" ? "Video" : "Image" }} Post
+    </h4>
+    <h4 *ngIf="modalType == 'edit'">Edit Post</h4>
+    <span (click)="closeModal('NO')" class="dialog__close">
+      <img src="assets/images/close.svg" alt="Remove" />
+    </span>
+  </div>
+
+  <div class="dialog__body">
+    <div class="new-post">
+      <!---Add Post step 1--->
+      <div class="new-post__create" *ngIf="currentStep == 1">
+        <ul class="dflex">
+          <li (click)="onNextClick('image')" role="cursor">
+            <figure>
+              <img src="assets/images/gallery.svg" alt="Image" />
+            </figure>
+            Image
+          </li>
+          <li (click)="onNextClick('video')" role="cursor">
+            <figure>
+              <img src="assets/images/video.svg" alt="Video" />
+            </figure>
+            Video
+          </li>
+        </ul>
+      </div>
+      <!---Add Post step 2--->
+      <div class="upload-image" *ngIf="currentStep == 2">
+        <form [formGroup]="addPostForm" (ngSubmit)="submitForm()">
+          <ng-container>
+            <div
+              class="field-group upload-image__field"
+              *ngIf="!modalData || modalData.type != 'edit'"
+            >
+              <aside [hidden]="uploadedImages.length != 0">
+                <app-input-field
+                  [placeholder]="'Description'"
+                  [type]="'file'"
+                  [formGroup]="this.addPostForm"
+                  [fieldControlName]="'file'"
+                  [listenToClick]="true"
+                  (onFileUpload)="onFileUpload($event)"
+                  [accept]="postType == 'image' ? 'image/*' : 'video/*'"
+                >
+                </app-input-field>
+                <figure>
+                  <img src="assets/images/upload.svg" alt="Upload" />
+                </figure>
+                <p>Drag and drop or <span>upload</span></p>
+              </aside>
+              <span
+                *ngIf="handleErrors(addPostForm, 'file', 'required')"
+                class="error"
+              >
+                {{ getErrorMessage(postType) }}
+              </span>
+              <ul class="dflex">
+                <li *ngFor="let uploadedImage of uploadedImages; let i = index">
+                  <img
+                    *ngIf="fileFormat === 'image'"
+                    [src]="uploadedImage.imageUrl"
+                    alt=""
+                  />
+                  <video
+                    [src]="uploadedImage.imageUrl"
+                    *ngIf="fileFormat === 'video'"
+                    height="200"
+                    controls
+                  ></video>
+                  <button
+                    type="button"
+                    [id]="'button' + i"
+                    (click)="onImageRemove(i)"
+                  >
+                    <img src="assets/images/close.svg" alt="Remove" />
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+          <!--- Post Upload Form--->
+          <ng-container>
+            <div class="upload-image__form">
+              <div class="field-group">
+                <app-input-field
+                  [placeholder]="'Title'"
+                  [type]="'text'"
+                  [formGroup]="this.addPostForm"
+                  [fieldControlName]="'postTitle'"
+                >
+                </app-input-field>
+                <span
+                  *ngIf="handleErrors(addPostForm, 'postTitle', 'required')"
+                  class="error"
+                >
+                  {{ getErrorMessage("required") }}
+                </span>
+              </div>
+              <div class="field-group">
+                <app-input-field
+                  [maxlength]="300"
+                  [placeholder]="'Description'"
+                  [type]="'text'"
+                  [formGroup]="this.addPostForm"
+                  [fieldControlName]="'postDesc'"
+                >
+                </app-input-field>
+              </div>
+              <div class="field-group">
+                <app-input-field
+                  [placeholder]="'Redirect Link'"
+                  [type]="'text'"
+                  [formGroup]="this.addPostForm"
+                  [fieldControlName]="'redirectLink'"
+                >
+                </app-input-field>
+              </div>
+              <div class="upload-image__form-btn">
+                <app-button
+                  *ngIf="modalType != 'edit'"
+                  [passedClass]="'gray'"
+                  [buttonText]="'Back'"
+                  (click)="onPrevClick()"
+                >
+                </app-button>
+                <app-button
+                  [disabled]="disableButton()"
+                  [buttonText]="modalType == 'edit' ? 'Update' : 'Create'"
+                  (click)="onCreatePost()"
+                  [loading]="isLoading"
+                >
+                </app-button>
+              </div>
+            </div>
+          </ng-container>
+        </form>
+      </div>
+      <!---Add Post Success--->
+      <div class="new-post__success" *ngIf="currentStep == 3">
+        <figure>
+          <img src="assets/images/check-green.svg" alt="Success" />
+        </figure>
+        <h4>Success!</h4>
+        <p>{{modalType == 'edit' ? 'Your post has been updated successfully': 'Your post has been published successfully.'}}</p>
+        <button class="button sm" (click)="closeModal('DONE')">Done</button>
+      </div>
+    </div>
+  </div>
+</div>

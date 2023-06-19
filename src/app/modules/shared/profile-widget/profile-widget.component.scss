@@ -1,0 +1,44 @@
+@import '../../../../assets/scss/variables.scss';
+
+.userProfile {
+    aside {
+        position: relative;
+        width: 120px;
+        margin: 0 auto 20px;
+        @include max-screen($desktop) {
+            width: 90px;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            appearance: none;
+            position: absolute;
+            right: 7px;
+            bottom: 7px;
+            z-index: 1;
+            img {
+                width: 25px;
+            }
+        }
+    }
+    &__img {
+        @include image-round(120px);
+        @include max-screen($desktop) {
+            width: 90px;
+            height: 90px;
+        }
+    }
+    figcaption {
+        text-align: center;
+        h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        p {
+            color: $color-gray;
+            line-height: 1;
+        }
+    }
+}

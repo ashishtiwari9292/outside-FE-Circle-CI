@@ -1,0 +1,208 @@
+@import "../../../../assets/scss/variables.scss";
+.video-player {
+    position: relative;
+    // &::after {
+    //     left: 0;
+    //     bottom: 0;
+    //     width: 100%;
+    //     content: "";
+    //     height: 15%;
+    //     display: block;
+    //     position: absolute;
+    //     background: linear-gradient(0deg, rgba($color-black, 0.5), transparent);
+    // }
+    video {
+        border: 0;
+        width: 100%;
+        display: block;
+    }
+    &__controls {
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        position: absolute;
+        padding: 30px 25px 25px;
+        @include max-screen($mobile) {
+            padding: 15px 10px 10px;
+        }
+        aside {
+            margin-left: auto;
+            > div {
+                cursor: pointer;
+                margin-left: 20px;
+                position: relative;
+                @include max-screen($mobile) {
+                    width: 20px;
+                    height: 18px;
+                    display: flex;
+                    margin-left: 10px;
+                    align-items: center;
+                }
+                img {
+                    max-height: 100%;
+                }
+                span {
+                    left: 50%;
+                    opacity: 0;
+                    font-size: 12px;
+                    visibility: hidden;
+                    position: absolute;
+                    color: $color-white;
+                    white-space: nowrap;
+                    bottom: calc(100% + 8px);
+                    transition: 0.3s ease-in-out;
+                    transform: translate(-50%, 100%);
+                    @include max-screen($mobile) {
+                        display: none;
+                    }
+                }
+                &:hover {
+                    span {
+                        opacity: 1;
+                        visibility: visible;
+                        transform: translate(-50%, 5px);
+                    }
+                }
+                ul {
+                    left: 50%;
+                    display: none;
+                    padding: 10px 0;
+                    min-width: 175px;
+                    position: absolute;
+                    border-radius: 5;
+                    background: $color-white;
+                    bottom: calc(100% + 35px);
+                    transform: translateX(-50%);
+                    @include max-screen($mobile) {
+                        overflow-y: auto;
+                        min-width: 130px;
+                        max-height: 130px;
+                        bottom: calc(100% + 20px);
+                    }
+                    li {
+                        cursor: pointer;
+                        padding: 0 30px;
+                        font-size: 12px;
+                        line-height: 34px;
+                        color: $color-black;
+                        position: relative;
+                        @include max-screen($mobile) {
+                            line-height: 30px;
+                        }
+                        &.active,
+                        &:hover {
+                            background: lighten($color-black, 97.25);
+                            @include background-image(tick, svg, 12px, no-repeat, 10px);
+                        }
+                    }
+                    &.active {
+                        display: block;
+                    }
+                }
+            }
+        }
+        &-play {
+            width: 31px;
+            cursor: pointer;
+            position: relative;
+            @include max-screen($mobile) {
+                width: 18px;
+            }
+            span {
+                left: 29%;
+                opacity: 0;
+                font-size: 12px;
+                position: absolute;
+                color: $color-white;
+                white-space: nowrap;
+                bottom: calc(100% + 3px);
+                transition: 0.3s ease-in-out;
+                transform: translate(-50%, 100%);
+                @include max-screen($mobile) {
+                    display: none;
+                }
+            }
+            &:hover {
+                span {
+                    opacity: 1;
+                    transform: translate(-50%, 0);
+                }
+            }
+        }
+        &-progress {
+            top: -8px;
+            left: 10px;
+            right: 10px;         
+            position: absolute;
+            @include max-screen($mobile) {
+                left: 0;
+                right: 0;
+            }
+            mat-slider {
+                z-index: 1;
+                width: 100%;
+                display: block;
+            }
+        }
+        &-loaded {
+            top: 50%;
+            left: 8px;
+            right: 8px;
+            height: 4px;
+            cursor: pointer;
+            position: absolute;
+            transform: translateY(-50%);
+            span {
+                top: 0;
+                left: 0;
+                height: 100%;
+                border-radius: 4px;
+                position: absolute;
+                background-color: rgba($color-white, 0.78);
+            }
+        }
+        &-timer {
+            min-width: 90px;
+            font-size: 16px;
+            color: $color-white;
+            margin: 0 25px 0 15px;
+            @include max-screen($mobile) {
+                margin: 0 5px 0 10px;
+                font-size: 10px;
+                min-width: 50px;
+            }
+        }
+        &-sound {
+            width: 32px;
+            cursor: pointer;
+            @include max-screen($mobile) {
+                width: 25px;
+            }
+        }
+        &-volume {
+            width: 70px;
+            height: 20px;
+            margin-left: 10px;
+            position: relative;
+            @include max-screen($mobile) {
+                margin-left: 0;
+            }
+            mat-slider {
+                left: 0;
+                width: 100%;
+                min-width: 0;
+                position: absolute;
+            }    
+        }
+    }
+    ::ng-deep {
+      .vjs-big-play-button{
+         position: absolute;
+         left: 50%;
+         top: 50%;
+         transform: translate(-50%, -50%);
+      }
+    }
+}
+ 

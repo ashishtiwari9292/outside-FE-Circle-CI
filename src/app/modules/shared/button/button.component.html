@@ -1,0 +1,8 @@
+<button [className]="'button '+passedClass" type="submit" title="{{ buttonText }}" [disabled]="loading || disabled">
+    <span>{{ buttonText }}</span>
+    <div class="btn-loader" *ngIf="loading">
+        <span class="btn-loader__dots"></span>
+        <span class="btn-loader__dots"></span>
+        <span class="btn-loader__dots"></span>
+    </div>
+</button>

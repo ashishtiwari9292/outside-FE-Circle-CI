@@ -1,0 +1,130 @@
+@import "../../../../assets/scss/variables.scss";
+
+.auth-popup {
+    @include background-image(auth-bg, png, center, cover);
+    &__left {
+        padding: 30px;
+        width: 43%;
+        @include max-screen($tablet) {
+            width: 100%;
+        }
+        &-logo {
+            max-width: 120px;
+            margin-bottom: 83px;
+            @include max-screen($tablet) {
+                margin: 0 auto 30px;
+            }
+        }
+    }
+    &__right {
+        width: calc(57% - 20px);
+        margin: 20px 20px 20px 0;
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+        border-radius: $radius-md;
+        @include max-screen($tablet) {
+            width: 100%;
+            display: none;
+        }
+    }
+    &__sliderImg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+    &__media {
+        &-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: $radius-lg;
+            line-height: 50px;
+            background-color: $color-secondary;
+            margin-right: 10px;
+            img {
+                width: 18px;
+            }
+        }
+        p {
+            margin-bottom: 0;
+            color: $color-white;
+        }
+    }
+    &__content {
+        padding: 23px 20px;
+        position: relative;
+        height: 100%;
+        @include max-screen($desktop) {
+            padding: 50px 50px 90px;
+        }
+        @include max-screen($tablet) {
+            justify-content: flex-start;
+        }
+        @include max-screen($mobile) {
+            padding: 40px 15px;
+        }
+        &-top {
+            @include max-screen($tablet) {
+                margin-bottom: 20px;
+            }
+            p,
+            h2 {
+                color: $color-white;
+            }
+            h2 {
+                font-size: 70px;
+                line-height: 1;
+                font-weight: 900;
+                margin-bottom: 36px;
+                @include max-screen($desktop) {
+                    font-size: 50px;
+                }
+                @include max-screen($tablet) {
+                    font-size: 30px;
+                }
+            }
+            p {
+                margin-bottom: 8px;
+            }
+        }
+        &-middle {
+            padding: 25px 0 60px;
+        }
+        &-bottom {
+            p {
+                background-color: rgba($color-primary, 0.64);
+                color: $color-white;
+                padding: 5px 20px;
+                border-radius: $radius-lg;
+                margin: 15px 0;
+                @include max-screen($desktop) {
+                    padding: 4px 20px;
+                }
+                &:nth-child(1) {
+                    max-width: 235px;
+                    margin-left: 60px;
+                    @include max-screen($desktop) {
+                        max-width: 210px;
+                    }
+                    @include max-screen($tablet) {
+                        margin-left: 0px;
+                    }
+                }
+                &:nth-child(2) {
+                    max-width: 340px;
+                    margin-left: 160px;
+                    background-color: rgba($color-white, 0.57);
+                    color: $color-black;
+                    @include max-screen($desktop) {
+                        max-width: 270px;
+                    }
+                    @include max-screen($tablet) {
+                        margin-left: 0px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,81 @@
+<div class="video-player">
+    <video [id]="id" class="video-js" muted playsinline preload="auto">
+    </video>
+    <div *ngIf="!controls" class="video-player__controls">
+        <div class="video-player__controls-progress">
+            <mat-slider [value]="((this.player?.currentTime()||1*100) || 100)/(this.player?.duration()||100)||0"
+                (input)="this.player?.currentTime((($event.value || 100)/100)*(this.player?.duration()||100))" min="0" max="100">
+            </mat-slider>
+            <div class="video-player__controls-loaded">
+                <span [ngStyle]="{'width': ((this.player?.bufferedEnd()|| 1*100)/(this.player?.duration()|| 100)||100) + '%'}"></span>
+            </div>
+        </div>
+
+        <div class="video-player__controls-action flex alignCenter">
+            <!-- Play toggle -->
+            <div class="video-player__controls-play">
+                <ng-container *ngIf="player?player.paused():autoplay;else pause">
+                    <span>Play</span>
+                    <img (click)="togglePlayVideo(true)" src="assets/img/play.svg" alt="Play" />
+                </ng-container>
+                <ng-template #pause>
+                    <span>Pause</span>
+                    <img (click)="togglePlayVideo(false)" src="assets/img/pause.svg" alt="Play Toggle" />
+                </ng-template>
+            </div>
+
+            <!-- Time duration -->
+            <div class="video-player__controls-timer"> {{currentTime || '0:00'}}/{{ duration || '0:00'}}</div>
+
+            <!-- Sound -->
+            <div class="video-player__controls-sound" (click)="muteUnmuteVideo()">
+                <img [src]="muted ? 'assets/img/sound-off.svg':'assets/img/sound.svg'" alt="Sound Toggle" />
+            </div>
+
+            <!-- Volume -->
+            <div class="video-player__controls-volume">
+                <mat-slider *ngIf="!muted" [value]="100" (input)="player.volume((($event.value)|| 100)/100)" min="0" max="100">
+                </mat-slider>
+            </div>
+
+            <aside class="flex alignCenter">
+                <!-- video quality -->
+                <!-- <div class="video-player__controls-quality" appModalControl [modalRef]="quality">
+                    <span>Quality</span>
+                    <img src="assets/img/quality.svg" alt="Quality" />
+                    <ul #quality>
+                        <li>1080</li>
+                        <li>720</li>
+                        <li>480</li>
+                        <li>360</li>
+                        <li>240</li>
+                        <li>144</li>
+                        <li class="active">Auto</li>
+                    </ul>
+                </div> -->
+
+                <!-- playback -->
+                <!-- <div class="video-player__controls-playback" appModalControl [modalRef]="playbackSpeed">
+                    <span>Playback speed</span>
+                    <img src="assets/img/playback.svg" alt="Playback" />
+                    <ul #playbackSpeed>
+                        <li *ngFor="let value of speedList" (click)="player.playbackRate(value);playBackSpeed=value"
+                            [ngClass]="{'active':playBackSpeed==value}">{{value}}</li>
+                    </ul>
+                </div> -->
+
+                <!-- mini player -->
+                <div class="video-player__controls-mini" (click)="player.requestPictureInPicture()">
+                    <span>Mini player</span>
+                    <img src="assets/img/mini-player.svg" alt="Mini player" />
+                </div>
+
+                <!-- Full screen -->
+                <div class="video-player__controls-full" (click)="player.requestFullscreen()">
+                    <span>Full screen</span>
+                    <img src="assets/img/full.svg" alt="View Toggle" />
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>

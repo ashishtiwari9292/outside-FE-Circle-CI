@@ -1,0 +1,44 @@
+<div class="dialog__wrap">
+  <div class="dialog__head">
+    <h4 class="ng-star-inserted">Update image</h4>
+    <span (click)="closeModal('NO')" class="dialog__close">
+      <img src="assets/images/close.svg" alt="Remove" />
+    </span>
+  </div>
+  <div class="dialog__body dialog__body--ptzero">
+    <div class="upload-image">
+      <form>
+        <div class="imagegrid">
+          <ul class="dflex">
+            <span *ngIf="!isLoadingPhotos && !userphotos">No Images Found!</span>
+            <ng-container *ngIf="isLoadingPhotos; then loader"></ng-container>
+            <li *ngFor="let photo of userphotos; let i = index" (click)="selectPhoto(photo.id)">
+              <figure [ngClass]="{ selected: (!selectedPhoto && photo.isCurrent) || (selectedPhoto == photo.id) }">
+                <span>
+                  <img (click)="onImageRemove(i)" src="assets/images/close.svg" alt="Remove" />
+                </span>
+                <img [src]="photo.photoUrl" alt="images" />
+                <figcaption>
+                  <img src="assets/images/check-blue.svg" alt="check" />
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+        <ng-container>
+          <div class="upload-image__form">
+            <div class="field-group text-center">
+              <app-button *ngIf="isLoadingPhotos || userphotos" [buttonText]="'Update'" [loading]="isSettingPhoto"
+                (click)="onUpdate()"></app-button>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+    </div>
+  </div>
+</div>
+<ng-template #loader>
+  <li *ngFor="let i of [].constructor(8)" class="imagegrid__laoder">
+    <app-skeleton width="100px" height="90px"></app-skeleton>
+  </li>
+</ng-template>

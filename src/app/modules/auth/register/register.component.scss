@@ -1,0 +1,15 @@
+@import '../../../../assets/scss/variables.scss';
+
+.register {
+    @extend %form;
+    &__login {
+        &:hover {
+            color: $color-white;
+        }
+    }
+    ::ng-deep {
+        .error {
+            color: $color-white !important;
+        }
+    }
+}

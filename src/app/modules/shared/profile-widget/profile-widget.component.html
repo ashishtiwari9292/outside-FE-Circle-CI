@@ -1,0 +1,16 @@
+<figure class="userProfile">
+    <aside>
+        <img *ngIf="img; else notFound" [src]="img" alt="{{ title }}" class="userProfile__img">
+        <ng-template #notFound>
+            <img src="assets/images/skelton-man-md.png" alt="User" class="userProfile__img">
+        </ng-template>
+        <button *ngIf="editButton" type="button" role="cursor" (click)="onClick()" title="Edit">
+            <img src="assets/images/edit-icon.svg" alt="Edit">
+        </button>
+    </aside>
+    <figcaption>
+        <h4 *ngIf="title">{{ title }}</h4>
+        <p *ngIf="subTitle">{{ subTitle }}</p>
+    </figcaption>
+    <button *ngIf="followButton" (click)="onClick()">{{followButton}}</button>
+</figure>

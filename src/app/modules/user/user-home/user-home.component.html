@@ -1,0 +1,74 @@
+<div class="feed" *ngIf="!error">
+    <div class="feed__banner">
+        <figure>
+            <app-skeleton *ngIf="isLoadingCoverimg" height="220px" radius="0"></app-skeleton>
+            <img *ngIf="!isLoadingCoverimg" [src]="coverImage || 'assets/images/skelton-bg-1.png'" alt="" />
+        </figure>
+    </div>
+    <div class="feed__content">
+        <div *ngIf="isLoggedIn && (isLoadingFollowers || followersList.data.length != 0)" class="feed__recent">
+            <h4>Recent followers</h4>
+            <!---User Followers-->
+            <div class="userFollowers dflex">
+                <ol class="userFollowers__skelton dflex" *ngIf="isLoadingFollowers">
+                    <li *ngFor="let i of [].constructor(2)">
+                        <app-skeleton type="circle" width="120px" height="120px" margin="0 0 10px"></app-skeleton>
+                        <app-skeleton width="100%" height="10px"></app-skeleton>
+                    </li>
+                </ol>
+                <ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig" *ngIf="!isLoadingFollowers"
+                    (beforeChange)="beforeChange($event)">
+                    <div ngxSlickItem *ngFor="let data of followersList.data">
+                        <figure *ngIf="data?.username != 'skeleton'" (click)="onUserClick(data.username)">
+                            <img [src]="data?.photoUrl ||
+                                'assets/images/skelton-man-md.png'" [alt]="data?.fullName" />
+                            <figcaption>
+                                <p>{{ data?.fullName }}</p>
+                            </figcaption>
+                        </figure>
+                        <app-skeleton *ngIf="data?.username == 'skeleton'" type="circle" width="100px" height="100px" margin="0 0 10px"></app-skeleton>
+                        <app-skeleton *ngIf="data?.username == 'skeleton'" width="70%" height="10px"></app-skeleton>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+            <!--User Followers-->
+        </div>
+        <div class="feed__posts">
+            <h4>Discovered</h4>
+            <ul *ngIf="posts || isLoadingPosts" infiniteScroll [infiniteScrollDistance]="2"
+                [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [alwaysCallback]="true">
+                <li *ngFor="let post of posts">
+                    <app-post-card [isLoading]="isLoadingPosts" [ownProfile]="post.ownPost" [post]="post"
+                        (onDeletePost)="onDeletePost($event)"
+                        (onEditPost)="onEditPost($event)"></app-post-card>
+                </li>
+                <ng-container *ngIf="(!posts || posts.length == 0) &&
+                    isLoadingPosts">
+                    <li *ngFor="let i of [].constructor(4)">
+                        <app-post-card [isLoading]="isLoadingPosts"></app-post-card>
+                    </li>
+                </ng-container>
+            </ul>
+            <div class="noPostFound" *ngIf="!isLoadingPosts && (!posts ||
+                posts.length == 0)">
+                <article>
+                    <img src="assets/images/no-data.svg" alt="No Data Found">
+                    <h5>No Recent Activity!</h5>
+                </article>
+            </div>
+            <div *ngIf="loadingMore" class="feed__posts-loading">
+                <button class="button sm link">
+                    Loading
+                    <div class="btn-loader">
+                        <span class="btn-loader__dots"></span>
+                        <span class="btn-loader__dots"></span>
+                        <span class="btn-loader__dots"></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="error">
+    <span>Something went wrong!</span><a href="/">Go To Home</a>
+</div>

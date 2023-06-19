@@ -1,0 +1,605 @@
+@import "../../../assets/scss/variables.scss";
+
+.post {
+  padding: 50px 0;
+  min-height: calc(100vh - 300px);
+  background-color: $color-white-dark;
+  @include max-screen($desktop) {
+    padding: 20px 0;
+  }
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+  }
+  &__info {
+    @extend %card-box;
+    @include max-screen($mobile) {
+      padding: 10px;
+    }
+  }
+  &__body {
+    margin-bottom: 30px;
+  }
+  &__media {
+    width: 45%;
+    position: relative;
+    @include max-screen($tablet) {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    figure {
+      img {
+        border-radius: $radius-md;
+        width: 100%;
+        max-height: 486px;
+        min-height: 486px;
+        object-fit: cover;
+        box-shadow: $shadow-card;
+        @include max-screen($mobile) {
+          max-height: 200px;
+          min-height: 200px;
+        }
+      }
+      video {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        border-radius: $radius-md;
+      }
+    }
+    ::ng-deep {
+      .video-player {
+        box-shadow: $shadow-card;
+      }
+    }
+    &-tag {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      z-index: 2;
+      background-color: $color-white;
+      color: $color-black;
+      padding: 7px 20px;
+      border-radius: $radius-lg;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        box-shadow: inset 0px 0px 10px rgba($color-primary, 0.6);
+      }
+      img {
+        width: 15px;
+        margin-right: 10px;
+      }
+      &.is-video {
+        top: 10px;
+        left: auto;
+        right: 10px;
+        bottom: auto;
+      }
+    }
+  }
+  &__content {
+    width: 55%;
+    padding-left: 30px;
+    @include max-screen($tablet) {
+      width: 100%;
+      padding-left: 0;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 30px;
+      @include max-screen($desktop) {
+        font-size: 25px;
+        margin-bottom: 5px;
+      }
+      @include max-screen($mobile) {
+        font-size: 22px;
+      }
+    }
+    P {
+      font-size: 20px;
+      line-height: 1.22;
+      color: $color-black;
+      @include max-screen($mobile) {
+        font-size: 18px;
+      }
+    }
+    &-head {
+      margin-bottom: 15px;
+      aside {
+        width: 100%;
+        position: relative;
+        img {
+          @include image-round(60px);
+          margin-right: 10px;
+          @include max-screen($tablet) {
+            width: 50px;
+            height: 50px;
+          }
+        }
+        article {
+          padding-right: 105px;
+          width: calc(100% - 70px);
+          @include max-screen($tablet) {
+            width: calc(100% - 60px);
+          }
+          @include max-screen($mobile) {
+            padding-right: 85px;
+          }
+          h5 {
+            font-weight: bold;
+            margin-bottom: 3px;
+            word-break: break-word;
+          }
+          p {
+            line-height: 1.1;
+            margin-bottom: 0;
+            & > span {
+              margin-right: 15px;
+            }
+          }
+          button {
+            top: 50%;
+            right: 0;
+            height: 40px;
+            font-size: 16px;
+            min-width: 90px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            position: absolute;
+            transform: translateY(-50%);
+            @include max-screen($mobile) {
+              height: 30px;
+              min-height: 0;
+              min-width: 0;
+              padding: 5px 10px;
+              font-size: 12px;
+            }
+            .btn-loader {
+              height: 12px;
+              width: 30px;
+              &__dots {
+                width: 5px;
+                height: 5px;
+              }
+            }
+          }
+        }
+      }
+      button {
+        &:not(.button) {
+          @extend %button-type-remove;
+        }
+      }
+    }
+    &-actions {
+      & > span {
+        display: inline-block;
+        margin-right: 20px;
+        img {
+          width: 45px;
+          &:nth-of-type(2) {
+            display: none;
+          }
+          @include max-screen($tablet) {
+            width: 30px;
+          }
+        }
+        &.active {
+          img {
+            display: none;
+            &:nth-of-type(2) {
+              display: inline-block;
+            }
+          }
+        }
+      }
+      & > p {
+        display: inline-block;
+        margin: 0 30px 0 0;
+        font-size: 20px;
+        padding: 0 10px;
+        min-width: 58px;
+        height: 58px;
+        line-height: 58px;
+        text-align: center;
+        color: $color-gray;
+        border: 1px solid $color-border;
+        border-radius: $radius-md;
+        position: relative;
+        @include max-screen($tablet) {
+          height: 40px;
+          min-width: 40px;
+          font-size: 16px;
+          line-height: 40px;
+        }
+        &::before {
+          content: "";
+          width: 10px;
+          height: 10px;
+          background: $color-white;
+          border: 1px solid;
+          border-color: $color-border transparent transparent $color-border;
+          position: absolute;
+          left: -6px;
+          top: 50%;
+          transform: translateY(-50%) rotate(-34deg) skewX(20deg);
+        }
+      }
+      ::ng-deep .button {
+        height: 56px;
+        min-width: 139px;
+        @include max-screen($desktop) {
+          min-width: 115px;
+        }
+        @include max-screen($tablet) {
+          height: 40px;
+          min-width: 100px;
+        }
+      }
+      ::ng-deep {
+        .mat-progress-spinner circle,
+        .mat-spinner circle {
+          stroke: $color-secondary;
+        }
+        .mat-spinner,
+        .mat-spinner svg {
+          width: 25px !important;
+          height: 25px !important;
+        }
+      }
+    }
+  }
+  &__comments {
+    ::ng-deep {
+      .mat-progress-spinner circle,
+      .mat-spinner circle {
+        stroke: #039ce0;
+      }
+      .mat-spinner,
+      .mat-spinner svg {
+        width: 20px !important;
+        height: 20px !important;
+      }
+    }
+    @extend %form;
+    h5 {
+      font-weight: 600;
+    }
+    & > ul {
+      margin-bottom: 20px;
+      li {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+        figure {
+          margin-bottom: 5px;
+          img {
+            @include image-round(40px);
+            margin-right: 10px;
+            cursor: pointer;
+          }
+          h6 {
+            font-weight: 700;
+            margin-bottom: 0;
+            font-size: 20px;
+          }
+          p {
+            margin-bottom: 0;
+            font-size: 16px;
+            color: $color-black;
+          }
+        }
+        article {
+          font-size: 20px;
+          line-height: 1.4;
+          color: $color-black;
+          margin-bottom: 15px;
+          @include max-screen($tablet) {
+            font-size: 16px;
+          }
+        }
+        ol {
+          li {
+            margin-right: 25px;
+            & > button {
+              display: inline-flex;
+              align-items: center;
+              @extend %button-type-remove;
+              img {
+                max-width: 24px;
+                max-height: 20px;
+                margin-right: 5px;
+              }
+              span {
+                font-size: 20px;
+              }
+            }
+            &.replyInput {
+              width: 100%;
+              margin: 0;
+            }
+            aside {
+              text-align: right;
+              button {
+                margin-left: 15px;
+                min-width: 80px;
+              }
+            }
+            &.likesCount {
+              button {
+                img {
+                  &:nth-of-type(2) {
+                    display: none;
+                  }
+                }
+                &.commentLiked {
+                  img {
+                    display: none;
+                    &:nth-of-type(2) {
+                      display: inline-block;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .repliedInput {
+          aside {
+            text-align: right;
+            button {
+              margin-left: 10px;
+              min-width: 80px;
+            }
+          }
+        }
+        &.is-delete {
+          img {
+            width: 25px;
+          }
+        }
+        &.is-trash {
+          padding-top: 2px;
+        }
+      }
+      ul {
+        padding: 20px;
+      }
+    }
+    &-count {
+      color: $color-primary;
+      font-size: 14px;
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+    &-posting {
+      figure {
+        img {
+          @include image-round(40px);
+          margin-right: 10px;
+          cursor: pointer;
+        }
+      }
+      aside {
+        text-align: right;
+        button {
+          margin-left: 15px;
+          min-width: 80px;
+        }
+      }
+      input {
+        min-height: 53px !important;
+      }
+    }
+  }
+  &__similar {
+    width: 100%;
+    max-width: 1500px;
+    padding: 50px 15px;
+    margin: 0 auto;
+    h3 {
+      font-weight: 600;
+    }
+    &-skelton {
+      margin: 0 -15px;
+      @include max-screen($mobile) {
+        margin: 0 -5px;
+      }
+      &-item {
+        width: calc(100% / 4);
+        padding: 0 15px;
+        margin-bottom: 10px;
+        @include max-screen($desktop) {
+          width: calc(100% / 3);
+        }
+        @include max-screen($mobile) {
+          width: calc(100% / 2);
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+  .close {
+    display: none;
+  }
+  &.drawer {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+    position: fixed;
+    max-width: 885px;
+    overflow-y: auto;
+    padding: 10px 20px 0 0;
+    transform: translateX(105%);
+    transition: 0.3s ease-in-out transform;
+    background-color: $color-white;
+    @include max-screen($desktop) {
+      max-width: 750px;
+    }
+    @include max-screen($tablet) {
+      opacity: 0;
+      max-width: 100%;
+      visibility: hidden;
+      padding: 15px 0 0;
+      transform: scale(0);
+    }
+    @include max-screen($mobile) {
+      top: 55px;
+      padding-top: 25px;
+    }
+    .post__container {
+      padding: 0;
+    }
+    .post__info {
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .post__media {
+      @include min-screen($tablet) {
+        width: 55%;
+      }
+      figure {
+        img {
+          @include min-screen($tablet) {
+            min-height: 335px;
+          }
+        }
+      }
+      &-inner {
+        position: relative;
+      }
+      .postInfo {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 6;
+
+        &__content {
+          display: none;
+          position: absolute;
+          right: 0;
+          width: 287px;
+          background-color: $color-white;
+          border-radius: 10px;
+          padding: 15px;
+          font-size: 12px;
+          box-shadow: 0px 3px 6px rgba($color-black, 0.27);
+          label {
+            width: 80px;
+          }
+          p {
+            margin-bottom: 0;
+          }
+        }
+        &:hover {
+          .postInfo__content {
+            display: block;
+          }
+        }
+      }
+      .postNav {
+        position: absolute;
+        top: 50%;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        transform: translateY(-50%);
+        padding: 0 15px;
+        z-index: 2;
+        button {
+          @include image-round(40px);
+          background-color: rgba($color-white, 0.8);
+          border: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          @include max-screen($tablet) {
+            @include image-round(30px);
+          }
+        }
+      }
+    }
+    .postThumbnail {
+      overflow: hidden;
+      margin-top: 15px;
+      ul {
+        display: flex;
+        overflow-x: auto;
+        li {
+          padding: 5px;
+          border-radius: 10px;
+          border: 1px solid transparent;
+          &.active {
+            border: 1px solid $color-primary;
+          }
+          img {
+            width: 60px;
+            height: 60px;
+            max-width: none;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .postChip {
+      margin-top: 15px;
+      gap: 10px;
+      span {
+        border-radius: 55px;
+        padding: 5px 15px;
+        background-color: $color-primary;
+        color: $color-white;
+      }
+    }
+    .post__content {
+      @include min-screen($tablet) {
+        width: 45%;
+      }
+    }
+    .close {
+      top: 5px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      padding: 6px;
+      display: flex;
+      cursor: pointer;
+      border-radius: 50%;
+      position: absolute;
+      align-items: center;
+      justify-content: center;
+      background: rgba($color-white, 0.6);
+      img {
+        max-height: 100%;
+      }
+      &:hover {
+        box-shadow: $shadow;
+      }
+    }
+    ::ng-deep body.is-active &,
+    &.is-active {
+      transform: translateX(0);
+      @include max-screen($tablet) {
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+.thumbnail {
+  margin-top: 10px;
+  img {
+    width: 100px;
+    height: 100px;
+  }
+}

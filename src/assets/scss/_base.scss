@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $base-font-family;
+}
+html,
+body {
+    height: 100%;
+}
+body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $color-gray;
+    overflow-x: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    background: $color-gray-lighten;
+    &.activesidebar {
+        overflow: hidden;
+        .user {
+            &__left {
+                left: 0 !important;
+            }
+            &__overlay {
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+        }
+    }
+    &.is-active {
+        overflow: hidden;
+    }
+}
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+    &.white {
+        color: $color-white;
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
+}
+:focus-visible,
+:focus {
+    outline: none;
+    box-shadow: none;
+}
+video {
+    max-width: 100%;
+    vertical-align: middle;
+}
+figure {
+    margin: 0;
+}
+img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+::-ms-expand {
+    display: none;
+}
+.text-center {
+    text-align: center;
+}
+[role="cursor"] {
+    cursor: pointer;
+}
+.text-ellipse {
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+ngx-skeleton-loader {
+    display: flex;
+}
+ngx-slick-carousel {
+    width: 100%;
+}
+.isLoading {
+    opacity: 0.5;
+    position: relative;
+    cursor: default;
+}
+.container {
+    margin: 0 auto;
+    max-width: 1600px;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+    @include max-screen($desktop-xl) {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+    @include max-screen($desktop) {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    @include max-screen($tablet) {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}

@@ -1,0 +1,139 @@
+@import "../../../../assets/scss/variables.scss";
+
+.user {
+    &__overlay {
+        background-color: rgba($color-black, 0.5);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+    &__left {
+        width: 300px;
+        background-color: $color-white;
+        position: fixed;
+        left: 0;
+        top: 70px;
+        z-index: 9;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        @include max-screen($desktop) {
+            width: 80%;
+            top: 0;
+            left: -1200px;
+            z-index: 101;
+            height: 100vh;
+            transition: $base-transition;
+        }
+    }
+    &__middle {
+        width: calc(100% - 600px);
+        margin: auto;
+        background-color: $color-white-light;
+        padding: 45px;
+        min-height: 100vh;
+        @include max-screen($desktop-xl) {
+            padding: 30px;
+        }
+        @include max-screen($mobile) {
+            padding: 15px;
+        }
+        @include max-screen($desktop) {
+            width: 100% !important;
+            height: auto;
+        }
+        &.full {
+            width: calc(100% - 300px);
+            margin: 0 0 0 auto;
+        }
+    }
+    &__right {
+        width: 300px;
+        background-color: $color-white;
+        padding: 50px;
+        @include min-screen($desktop) {
+            position: fixed;
+            right: 0;
+            top: 70px;
+            z-index: 9;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+        @include max-screen($desktop-xl) {
+            padding: 30px;
+        }
+        @include max-screen($desktop) {
+            width: 100%;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        @include max-screen($mobile) {
+            padding: 25px 15px;
+        }
+        h5 {
+            font-weight: bold;
+            color: $color-black-light;
+        }
+        &-trending {
+            margin-bottom: 45px;
+            ul {
+                @include max-screen($mobile) {
+                    max-width: 100%;
+                }
+                li {
+                    margin: 5px;
+                    width: calc(100% / 2 - 10px);
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: cover;
+                    img,
+                    video {
+                        @include image-round(100%);
+                        border-radius: $radius-md;
+                        height: 95px;
+                        cursor: pointer;
+                        box-shadow: $shadow-card;
+                    }
+                }
+            }
+        }
+        &-suggestions {
+            ul {
+                li {
+                    margin-bottom: 15px;
+                    img {
+                        cursor: pointer;
+                        @include image-round(60px);
+                        min-width: 60px;
+                        margin-right: 10px;
+                        box-shadow: $shadow-card;
+                        @include max-screen($tablet) {
+                            @include image-round(50px);
+                            min-width: 50px;
+                        }
+                    }
+                    article {
+                        width: calc(100% - 60px);
+                        cursor: pointer;
+                        @include max-screen($tablet) {
+                            width: calc(100% - 50px);
+                        }
+                        h5 {
+                            font-weight: bold;
+                            font-size: 16px;
+                            margin-bottom: 0;
+                        }
+                        p {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

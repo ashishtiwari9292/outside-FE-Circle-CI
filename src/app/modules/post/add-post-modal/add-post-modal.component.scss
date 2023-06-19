@@ -1,0 +1,69 @@
+@import '../../../../assets/scss/variables.scss';
+
+.new-post {
+    &__create {
+        ul {
+            max-width: 350px;
+            margin: 0 auto;
+            li {
+                text-align: center;
+                width: calc(100%/2);
+                padding: 0 15px;
+                &:nth-child(1) {
+                    figure {
+                        background-color: $color-blue-light;
+                    }
+                }
+                &:nth-child(2) {
+                    figure {
+                        background-color: $color-green-light;
+                    }
+                }
+                figure {
+                    width: 120px;
+                    height: 120px;
+                    line-height: 120px;
+                    border-radius: $radius-circled;
+                    margin: 0 auto 10px;
+                    @include max-screen($mobile) {
+                        width: 90px;
+                        height: 90px;
+                        line-height: 90px;
+                    }
+                    img {
+                        width: 50px;
+                        @include max-screen($mobile) {
+                            width: 35px;
+                        }
+                    }
+                }
+            }
+        }
+    }   
+    &__success {
+        text-align: center;
+        figure {
+            background-color: $color-white-dark;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: $radius-circled;
+            margin: 0 auto 10px;
+            @include max-screen($mobile) {
+                width: 80px;
+                height: 80px;
+                line-height: 80px;
+            }
+            img {
+                width: 50px;
+                @include max-screen($mobile) {
+                    width: 35px;
+                }
+            }
+        }
+        h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    }
+}

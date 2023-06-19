@@ -1,0 +1,20 @@
+<div class="search-bar">
+    <img class="search-bar__logo" src="assets/images/logo.svg" alt="Outside"/>
+
+    <div class="search-bar__wrap">
+        <app-search-bar className="search-bar--home"></app-search-bar>
+        
+        <aside class="flex alignCenter">            
+            <div class="search-bar__switch flex alignCenter">
+                <picture [ngClass]="{'active': showCategories}" (click)="handleClick(true)">
+                    <img src="assets/images/grid-grey.svg" alt=""/>
+                    <img src="assets/images/grid-green.svg" alt=""/>
+                </picture>
+                <picture [ngClass]="{'active': !showCategories}" (click)="handleClick(false)">
+                    <img src="assets/images/masonry.svg" alt=""/>
+                    <img src="assets/images/masonry-green.svg" alt=""/>
+                </picture>
+            </div>
+        </aside>
+    </div>
+</div>

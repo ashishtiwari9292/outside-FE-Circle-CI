@@ -1,0 +1,57 @@
+<div class="launch dflex alignCenter">
+    <div class="launch__container dflex">
+        <!-- left -->
+        <div class="launch__left dflex flexColumn justifyBetween">
+            <figure>
+                <app-logo></app-logo>
+            </figure>
+            <article>
+                <h5><span>Coming Soon</span></h5>
+                <h1>Please verify your identity</h1>
+                <form #notifyForm="ngForm" (ngSubmit)="onSubmit(notifyForm)">
+                    <div class="field-group">
+                        <input maxlength="100" type="password" placeholder="Enter your password" class="outline-white circled"
+                            [(ngModel)]="password" name="password" #name="ngModel" required />
+                        <button class="button white" title="Notify Me" [disabled]="isLoading">
+                            <span>Submit</span>
+                            <div class="btn-loader" *ngIf="isLoading">
+                                <span class="btn-loader__dots"></span>
+                                <span class="btn-loader__dots"></span>
+                                <span class="btn-loader__dots"></span>
+                            </div>
+                        </button>
+                        <span *ngIf="isEmpty && password.length == 0" class="error">
+                            Password is required
+                        </span>
+                        <span *ngIf="isSubmitted && !serverError" class="success">
+                            Submitted Successfully
+                        </span>
+                        <span *ngIf="serverError" class="error">
+                            {{ serverErrorMessage }}
+                        </span>
+                    </div>
+                </form>
+            </article>
+            <p>
+                For press and business inquiries:
+                <a href="mailto:joshua@strategywerks.com" title="joshua@strategywerks.com">
+                    joshua@strategywerks.com
+                </a>
+            </p>
+        </div>
+
+        <!-- right -->
+        <div class="launch__right dflex alignCenter">
+            <figure>
+                <img src="assets/images/laptop.png" alt="Outside" />
+                <figcaption>
+                    <a href="https://m.facebook.com/PocketOutdoorMedia/" target="_blank"
+                        title="https://m.facebook.com/PocketOutdoorMedia/"> **
+                        We are not affiliated with any magazines or dead tree
+                        publishing. You can find Pocket Outdoor Media here.
+                    </a>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>

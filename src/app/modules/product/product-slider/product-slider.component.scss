@@ -1,0 +1,31 @@
+@import "../../../../assets/scss/variables.scss";
+
+.product-slider {
+    max-width: 515px;
+    img {
+        border-radius: $radius-md;
+    }
+    figure {
+        margin-bottom: 15px;
+    }
+    ul {
+        li {
+            width: calc(100% / 4 - 10px);
+            margin: 5px;
+            span {
+                border: 2px solid transparent;
+                border-radius: $radius-md;
+                display: block;
+                img {
+                    border: 5px solid $color-white;
+                }
+            }
+            &.active,
+            &:hover {
+                span {
+                    border-color: $color-primary;
+                }
+            }
+        }
+    }
+}

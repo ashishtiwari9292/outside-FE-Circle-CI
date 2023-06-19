@@ -1,0 +1,286 @@
+@import "../../../../assets/scss/variables.scss";
+
+.header {
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    position: fixed;
+    transition: 0.3s ease-in-out box-shadow;
+    box-shadow: 0 4px 5px rgba($color-black, 0.15);
+    @include background-image(header-bg, png, center, auto 100%, no-repeat);
+    &__logo {
+        width: 200px;
+        @include min-screen($desktop){
+            margin-right: 70px;
+        }
+        @include max-screen($mobile) {
+            width: 140px;
+        }
+        a {
+            display: inline-block;
+        }
+    }
+    &__holder {
+        min-height: 70px;
+        @include max-screen($mobile) {
+            min-height: 55px;
+        }
+    }
+    &__search {
+        padding: 0 15px;
+        width: 100%;
+        max-width: 630px;
+        min-width: 280px;
+        min-height: 70px;
+        margin: 0 auto;
+        @include max-screen($desktop) {
+            position: fixed;
+            top: -200px;
+            left: 0;
+            z-index: 9;
+            width: 100%;
+            max-width: 100%;
+            background-color: $color-white;
+            padding: 10px 30px 10px 10px;
+            box-shadow: $shadow;
+            transition: $base-transition;
+            display: flex;
+            align-items: center;
+        }
+        @include max-screen($mobile) {
+            min-height: 55px;
+        }
+        &.searchOpen {
+            @include max-screen($desktop) {
+                top: 0;
+            }
+        }
+        app-search-bar {
+            width: 100%;
+        }
+        button {
+            @extend %button-type-remove;
+            width: 14px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            display: none;
+            @include max-screen($desktop) {
+                display: inline-block;
+            }
+        }
+    }
+    &__account {
+        margin-left: auto;
+        ul {
+            li {
+                button {
+                    @extend %badge;
+                    @extend %badge--alt;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                &:not(:first-child) {
+                    margin-left: 35px;
+                    @include max-screen($mobile) {
+                        margin-left: 20px;
+                    }
+                }
+                &.search {
+                    @include min-screen($desktop) {
+                        display: none;
+                    }
+                }
+                &:not(.account) {
+                    button {
+                        img {
+                            &:first-child {
+                                width: 20px;
+                            }
+                        }
+                    }
+                }
+                &.account {
+                    img {
+                        &:nth-of-type(1) {
+                            @include image-round(30px);
+                            border: 1.5px solid $color-gray;
+                            @include max-screen($mobile) {
+                                width: 25px;
+                                height: 25px;
+                            }
+                        }
+                        &:nth-of-type(2) {
+                            width: 10px;
+                            margin-left: 3px;
+                        }
+                    }
+                    span {
+                        color: $color-white;
+                        margin-left: 5px;
+                        font-size: 14px;
+                        @include max-screen($mobile) {
+                            display: none;
+                        }
+                    }
+                }
+                &:not(.notLogged) {
+                    button {
+                        @extend %button-type-remove;
+                    }
+                }
+                &.notLogged {
+                    button {
+                        min-width: 130px;
+                        @include max-screen($mobile) {
+                            min-width: inherit;
+                            min-height: 35px;
+                        }
+                    }
+                }
+                &.notifications {
+                    position: relative;
+                    aside {
+                        background-color: $color-white;
+                        box-shadow: $shadow;
+                        position: absolute;
+                        right: 0;
+                        top: 100%;
+                        z-index: 9;
+                        width: 300px;
+                        border-radius: $radius-md;
+                        overflow: hidden;
+                        @include max-screen($mobile) {
+                            width: 280px;
+                            right: -60px;
+                        }
+                        h5 {
+                            font-weight: 700;
+                            padding: 10px;
+                            margin-bottom: 0;
+                            border-bottom: 1px solid $color-border;
+                            .button {
+                                border-radius: 5px;
+                                min-height: auto;
+                                min-width: auto;
+                            }
+                        }
+                        ul {
+                            max-height: 320px;
+                            overflow: auto;
+                            @include max-screen($mobile) {
+                                max-height: 220px;
+                            }
+                            li {
+                                padding: 10px 30px 10px 10px;
+                                margin: 0;
+                                position: relative;
+                                background-color: $color-white;
+                                display: flex;
+                                align-items: center;
+                                &:not(:first-child) {
+                                    border-top: 1px solid $color-border;
+                                }
+                                &.notRead {
+                                    background-color: $color-white-dark;
+                                }
+                                img {
+                                    @include image-round(30px);
+                                    margin-right: 5px;
+                                }
+                                p {
+                                    @include text-clamp(2);
+                                    margin: 0;
+                                }
+                                span {
+                                    position: absolute;
+                                    right: 10px;
+                                    top: 13px;
+                                    z-index: 2;
+                                    font-size: 20px;
+                                    cursor: pointer;
+                                    width: 20px;
+                                    height: 20px;
+                                    line-height: 20px;
+                                    text-align: center;
+                                }
+                                &.noMore {
+                                    p {
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                            & + span {
+                                display: block;
+                                text-align: center;
+                                font-size: 12px;
+                                color: $color-primary;
+                                padding: 5px 0;
+                                cursor: pointer;
+                                font-weight: bold;
+                            }
+                        }
+                        & > p {
+                            text-align: center;
+                            margin-bottom: 0;
+                            padding: 7px 0;
+                            span {
+                                @extend %button-type-remove;
+                                color: $color-primary;
+                                .btn-loader {
+                                    &__dots {
+                                        background: $color-primary;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &__toggleSidebar {
+        @extend %button-type-remove;
+        margin-right: 20px;
+        @include min-screen($desktop) {
+            display: none;
+        }
+        @include max-screen($mobile) {
+            margin-right: 10px;
+        }
+        span {
+            display: block;
+            margin: 5px;
+            width: 30px;
+            height: 4px;
+            border-radius: $radius-md;
+            background-color: $color-white;
+            @include max-screen($mobile) {
+                margin: 2px;
+                width: 18px;
+                height: 3px;
+            }
+        }
+    }
+    & + .emptyheader {
+        min-height: 70px;
+        @include max-screen($mobile) {
+            min-height: 55px;
+        }
+    }
+    &--simple {
+        box-shadow: none;
+        position: absolute;
+        background: transparent;
+        & + .emptyheader {
+            display: none;
+        }
+    }
+    &--active {
+        box-shadow: 0 4px 5px rgba($color-black, 0.15);
+        @include background-image(header-bg, png, center, auto 100%, no-repeat);
+    }
+}

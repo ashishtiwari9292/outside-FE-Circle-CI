@@ -1,0 +1,179 @@
+<div class="profile">
+    <app-skeleton *ngIf="isLoading" [type]="'profile'"></app-skeleton>
+    <div class="profile__middle" *ngIf="!isLoading">
+        <!-- profile -->
+        <div class="profile__figurename dflex alignCenter">
+            <figure class="profile__uploading">
+                <span *ngIf="isUploadingProfile">
+                    <img src="assets/images/spinner.gif" alt="Loading" />
+                </span>
+                <img *ngIf="userData?.profilePic; else notFound" [src]="userData?.profilePic" alt="User" />
+                <ng-template #notFound>
+                    <img src="assets/images/skelton-man-md.png" alt="User" />
+                </ng-template>
+            </figure>
+            <aside class="dflex justifyBetween alignCenter">
+                <article>
+                    <h5 *ngIf="!isEditName">
+                        {{ userData.fullName }}
+                        <span class="active"></span>
+                    </h5>
+                    <div class="profile__editing" *ngIf="isEditName">
+                        <input maxlength="50" [disabled]="!isEditName" type="text" [(ngModel)]="userData.fullName" />
+                        <button *ngIf="isEditName" (click)="updateFullname()" class="button">
+                            {{ isUpdatingName ? "Saving..." : "Save" }}
+                        </button>
+                        <div class="profile__editing-error">
+                            <span *ngIf="isEmptyName" class="error">Please enter a name!</span>
+                        </div>
+                    </div>
+                    <p *ngIf="!isEditName">{{ userData.username }}</p>
+                </article>
+                <button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu" mat-button *ngIf="ownProfile"
+                    type="button" class="profile__edit">
+                    <img src="assets/images/edit-pencil.svg" alt="Edit" />
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before" class="uploadImage">
+                    <button mat-menu-item (click)="openImagePopup('profile')">
+                        <img src="assets/images/gallery-gray.svg" alt="Gallery" />
+                        Select from Gallery
+                    </button>
+                    <button class="uploadImageBtn" mat-menu-item (click)="isUploadProfile= !isUploadProfile">
+                        <img src="assets/images/upload-2.svg" alt="Upload" />
+                        <span>Upload Photo</span>
+                        <app-input-field (onClick)="closeMenu($event)" [placeholder]="'Upload Image'" [type]="'file'"
+                            [listenToClick]="true" (onFileUpload)="onFileUpload($event)" [accept]="'image/*'">
+                        </app-input-field>
+                    </button>
+                    <button *ngIf="userData.profilePic" mat-menu-item (click)="removePhoto('profile')">
+                        <img src="assets/images/delete.svg" alt="Delete" />
+                        Remove Photo
+                    </button>
+                    <button mat-menu-item (click)="isEditName= !isEditName">
+                        <img src="assets/images/edit-pencil.svg" alt="Edit" />
+                        Edit Name
+                    </button>
+                </mat-menu>
+            </aside>
+        </div>
+
+        <!-- cover photo -->
+        <div class="profile__coverphoto">
+            <div class="profile__heading">
+                <article>
+                    <h4>Cover Photo</h4>
+                </article>
+                <button mat-button [matMenuTriggerFor]="menu2" *ngIf="ownProfile" type="button" class="profile__edit">
+                    <img src="assets/images/edit-pencil.svg" alt="Edit" />
+                </button>
+                <mat-menu #menu2="matMenu" xPosition="before" class="uploadImage">
+                    <button mat-menu-item (click)="openImagePopup('cover')">
+                        <img src="assets/images/gallery-gray.svg" alt="Gallery" />
+                        Select from Gallery
+                    </button>
+                    <button class="uploadImageBtn" mat-menu-item (click)="isUploadCover= !isUploadCover">
+                        <img src="assets/images/upload-2.svg" alt="Upload" />
+                        <span>Upload Photo</span>
+                        <app-input-field [placeholder]="'Upload Image'" [type]="'file'" [listenToClick]="true"
+                            (onFileUpload)="onFileUpload($event, 'cover')" [accept]="'image/*'"></app-input-field>
+                    </button>
+                    <button *ngIf="userData.coverPic" mat-menu-item (click)="removePhoto('cover')">
+                        <img src="assets/images/delete.svg" alt="Delete" />
+                        Remove Photo
+                    </button>
+                </mat-menu>
+            </div>
+            <figure class="imageUploading">
+                <span *ngIf="isUploadingCover">
+                    <img src="assets/images/spinner.gif" alt="Loading" />
+                </span>
+                <img *ngIf="userData?.coverPic; else notFoundCover" [src]="userData?.coverPic" alt="Cover Photo" />
+                <ng-template #notFoundCover>
+                    <img src="assets/images/skelton-bg-1.png" alt="Cover Photo" />
+                </ng-template>
+            </figure>
+        </div>
+
+        <!-- bio -->
+        <div class="profile__bioinfo" [ngClass]="{ inputActive: editBio }">
+            <div class="profile__heading">
+                <article>
+                    <h4>Bio</h4>
+                    <p>Describe yourself...</p>
+                </article>
+                <button *ngIf="ownProfile" (click)="editBio= !editBio" type="button" class="profile__edit">
+                    <img src="assets/images/edit-pencil.svg" alt="Edit" />
+                </button>
+            </div>
+            <textarea value="userData?.about" [disabled]="!editBio" [(ngModel)]="bioValue" maxlength="200"></textarea>
+            <aside *ngIf="editBio">
+                <button (click)="saveBio()" class="button">Save</button>
+            </aside>
+        </div>
+
+        <!-- basic info -->
+        <!-- <div class="profile__basicinfo" [ngClass]="{ inputActive:
+            isUpdateBasicInfo }">
+            <div class="profile__heading">
+                <article>
+                    <h4>Basic Info</h4>
+                </article>
+                <button (click)="isUpdateBasicInfo= !isUpdateBasicInfo" type="button" class="profile__edit" *ngIf="ownProfile">
+                    <img src="assets/images/edit-pencil.svg" alt="Edit" />
+                </button>
+            </div>
+            <ul>
+                <li class="dflex justifyBetween alignCenter">
+                    <strong>
+                        <span>
+                            <img src="assets/images/birthday-cake.svg" alt="Bitrthday" />
+                        </span>
+                        Birthday
+                    </strong>
+                    <span *ngIf="!isUpdateBasicInfo">{{ userData?.dob || '--' }}</span>
+                    <span class="profile__editing" *ngIf="isUpdateBasicInfo">
+                        <input maxlength="20" [disabled]="!isUpdateBasicInfo" type="date" [(ngModel)]="userData.dob" />
+                    </span>
+                </li>
+                <li class="dflex justifyBetween alignCenter">
+                    <strong>
+                        <span>
+                            <img src="assets/images/location.svg" alt="Location" />
+                        </span>
+                        Location
+                    </strong>
+                    <span *ngIf="!isUpdateBasicInfo">{{ userData?.location ||
+                        '--' }}
+                    </span>
+                    <span class="profile__editing" *ngIf="isUpdateBasicInfo">
+                        <input maxlength="50" [disabled]="!isUpdateBasicInfo" type="text" [(ngModel)]="userData.location" />
+                    </span>
+                </li>
+                <li class="dflex justifyBetween alignCenter">
+                    <strong>
+                        <span>
+                            <img src="assets/images/heart-gray.svg" alt="Relationship" />
+                        </span>
+                        Relationship status
+                    </strong>
+                    <span *ngIf="!isUpdateBasicInfo">{{ userData?.relationship
+                        || '--' }}</span>
+                    <span class="profile__editing" *ngIf="isUpdateBasicInfo">
+                        <mat-form-field appearance="fill">
+                            <mat-select [(value)]="relationshipValue">
+                                <mat-option *ngFor="let status of
+                                    relationshipOptions" [value]="status.value">
+                                    {{ status.viewValue }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </span>
+                </li>
+            </ul>
+            <aside *ngIf="isUpdateBasicInfo">
+                <app-button (click)="updateBasicInfo()" [buttonText]="'Save'" [loading]="isUpdatingBasicInfo">
+                </app-button>
+            </aside>
+        </div> -->
+    </div>
+</div>

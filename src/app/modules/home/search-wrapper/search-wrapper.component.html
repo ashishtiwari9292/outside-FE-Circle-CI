@@ -1,0 +1,10 @@
+<div class="search-wrapper">
+    <app-search-block [showCategories]="show"  (showCategiesEmitter)="show = $event"></app-search-block>
+    <div class="search-wrapper__content">
+        <app-category *ngIf="show"></app-category>
+
+        <article *ngIf="!show">
+            <h3>Find what you want to do or buy Outside</h3>
+        </article>
+    </div>
+</div>

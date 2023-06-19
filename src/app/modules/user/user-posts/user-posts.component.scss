@@ -1,0 +1,38 @@
+@import '../../../../assets/scss/variables.scss';
+
+.user-posts {
+    ul {
+        margin: 0 -15px;
+        @include max-screen($mobile) {
+            margin: 0;
+        }
+        li {
+            width: calc(100%/3);
+            padding: 0 15px;
+            margin-bottom: 30px;
+            @include max-screen($desktop) {
+                width: calc(100%/2);
+            }
+            @include max-screen($mobile) {
+                width: calc(100%/1);
+                padding: 0;
+            }
+        }
+    }
+    &__loading {
+        text-align: center;
+        button {
+          @extend %button-type-remove;
+          margin-bottom: 15px;
+          cursor: auto;
+          &:hover {
+            color: $color-primary;
+          }
+          .btn-loader {
+            &__dots {
+              background: $color-primary;
+            }
+          }
+        }
+    }
+}

@@ -1,0 +1,278 @@
+@import "../../../../assets/scss/variables.scss";
+
+.profile {
+    &__uploading {
+        position: relative;
+        overflow: hidden;
+        span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            background-color: rgba($color-white, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            img {
+                width: 70px !important;
+                height: 70px !important;
+            }
+        }
+    }
+    &__editing {
+        width: 150px;
+        @include max-screen($mobile) {
+            width: 100%;
+            margin-top: 10px;
+        }
+        select {
+            width: 100%;
+        }
+        input {
+            width: 100%;
+            background-color: $color-white-light;
+            border: 1px solid $color-border;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0 10px 5px 0;
+            height: 36px;
+            &:disabled {
+                background-color: $color-white-dark !important;
+                cursor: not-allowed;
+            }
+        }
+        &-error {
+            @extend %form;
+        }
+    }
+    &__middle {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    &__edit {
+        @extend %button-type-remove;
+        background-color: $color-white-dark;
+        width: 30px;
+        height: 30px;
+        border: 1px solid $color-border;
+        border-radius: $radius-circled;
+        cursor: pointer;
+        img {
+            width: 12px;
+        }
+    }
+    &__heading {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h4 {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+    }
+    &__figurename {
+        margin-bottom: 30px;
+        @include max-screen($mobile) {
+            flex-direction: column;
+        }
+        figure {
+            background-color: $color-white;
+            width: 180px;
+            padding: 15px;
+            border-radius: $radius-circled;
+            position: relative;
+            z-index: 1;
+            @include max-screen($mobile) {
+                width: 110px;
+                padding: 10px;
+                margin: auto;
+            }
+            img {
+                @include image-round(150px);
+                @include max-screen($mobile) {
+                    @include image-round(90px);
+                }
+            }
+        }
+        aside {
+            background-color: $color-white;
+            width: calc(100% - 140px);
+            padding: 40px 30px 40px 60px;
+            margin-left: -40px;
+            border-radius: 0 $radius-md $radius-md 0;
+            @include max-screen($mobile) {
+                width: 100%;
+                padding: 20px;
+                margin: -20px 0 0 0;
+                align-items: flex-start;
+            }
+            article {
+                width: calc(100% - 50px);
+                h5 {
+                    font-weight: 600;
+                    margin-bottom: 0;
+                    span {
+                        width: 10px;
+                        height: 10px;
+                        display: inline-block;
+                        border-radius: $radius-lg;
+                        border: 1px solid $color-border;
+                        background-color: $color-white-dark;
+                        margin-left: 10px;
+                        &.active {
+                            background-color: $color-secondary;
+                            border-color: $color-secondary;
+                        }
+                    }
+                }
+                p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        .fieldEditing {
+            input {
+                @include max-screen($mobile) {
+                    width: 100%;
+                    margin-right: 0;
+                }
+            }
+            button {
+                min-height: 36px;
+                border-radius: 5px;
+            }
+        }
+    }
+    &__coverphoto,
+    &__bioinfo,
+    &__basicinfo {
+        background-color: $color-white;
+        margin-bottom: 30px;
+        padding: 30px;
+        border: 1px solid transparent;
+        border-radius: $radius-md;
+        @include max-screen($mobile) {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        &.inputActive {
+            border-color: $color-primary;
+        }
+    }
+    &__coverphoto {
+        figure {
+            border-radius: $radius-md;
+            overflow: hidden;
+            background-color: $color-white-dark;
+            position: relative;
+            span {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+                background-color: rgba($color-white, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                img {
+                    width: 70px !important;
+                    height: 70px !important;
+                }
+            }
+            img {
+                object-fit: cover;
+                height: 200px;
+                width: 100%;
+                @include max-screen($mobile) {
+                    height: 140px;
+                }
+            }
+        }
+    }
+    &__bioinfo {
+        .profile__heading {
+            align-items: flex-start;
+        }
+        textarea {
+            border: 1px solid rgba($color-border, 0.3);
+            padding: 15px;
+            background-color: $color-white-light;
+            border-radius: $radius-md;
+            width: 100%;
+        }
+        & > article {
+            @extend %form;
+            border: 1px solid rgba($color-border, 0.3);
+            padding: 30px;
+            background-color: $color-white-light;
+            border-radius: $radius-md;
+            @include max-screen($mobile) {
+                padding: 15px;
+            }
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+        aside {
+            text-align: right;
+            padding-top: 15px;
+        }
+    }
+    &__basicinfo {
+        ul {
+            li {
+                min-height: 40px;
+                &:not(:last-child) {
+                    margin-bottom: 15px;
+                }
+                strong {
+                    font-weight: 600;
+                    padding-right: 10px;
+                    color: $color-black;
+                    span {
+                        width: 24px;
+                        text-align: center;
+                        display: inline-block;
+                        margin-right: 10px;
+                    }
+                }
+                .fieldEditing {
+                    input {
+                        color: $color-gray;
+                        width: 160px;
+                        margin: 0;
+                    }
+                    .mat-form-field {
+                        width: 160px;
+                        ::ng-deep {
+                            .mat-select-value-text {
+                                font-size: 14px;
+                                color: $color-gray;
+                            }
+                        }
+                    }
+                    @include max-screen($mobile) {
+                        width: 100%;
+                        padding-top: 10px;
+                    }
+                }
+            }
+        }
+        aside {
+            text-align: right;
+            padding-top: 15px;
+        }
+    }
+    textarea {
+        resize: none;
+    }
+}

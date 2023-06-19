@@ -1,0 +1,72 @@
+@import '../../../../assets/scss/variables.scss';
+.category {
+    margin: 0 auto;
+    max-width: 780px;
+    &__list {
+        padding: 0 -10px;
+    }
+    &__item {
+        width: 20%;
+        text-align: center;
+        padding: 10px 10px 15px;
+        @include max-screen($mobile){
+            width: 25%;
+        }
+        @include max-screen($small){
+            width: 33.3%;
+        }
+        picture {
+            cursor: pointer;
+            padding: 4px;
+            width: 102px;
+            height: 102px;
+            display: block;
+            margin: 0 auto 6px;
+            position: relative;
+            border-radius: 50%;
+            background-image: linear-gradient(0deg, $color-secondary, $color-primary-dark);
+            @include max-screen($small){
+                width: 80px;
+                height: 80px;
+            }
+            img {
+                @include image-round(100%);
+                border: 4px solid $color-primary;
+            }
+        }
+        span {
+            display: block;
+            line-height: 1;
+            cursor: pointer;
+            font-size: 16px;
+            color: $color-white;
+        }
+    }
+    &--slider {
+        max-width: 100%;
+        .category__item {
+            width: 160px;
+            padding-bottom: 0;
+            margin: 10px auto 25px;
+            @include max-screen($desktop){
+                width: auto;
+            }
+            img {
+                border-color: $color-white;
+            }
+            span {
+                color: $color-black;
+            }
+            &.active {
+                transform: scale(1.3);
+                picture {
+                    padding: 7px;
+                }    
+                span {
+                    font-size: 14px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}

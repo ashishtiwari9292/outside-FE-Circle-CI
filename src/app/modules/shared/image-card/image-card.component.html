@@ -1,0 +1,34 @@
+<div (mouseover)="onMouseHover()" (mouseleave)="onMouseHover(true)" class="imagecard" [ngClass]="{videoWrap: imageCardData &&
+    (imageCardData.photoUrl && imageCardData.photoUrl.indexOf('/video/') != -1 || imageCardData.contentType == 'video')}">
+    <ng-container *ngIf="imageCardData.contentType == 'video' || imageCardData.contentType == 'image';else s3">
+        <img *ngIf="imageCardData.photoUrl && imageCardData.contentType == 'image'" [src]="imageCardData.photoUrl"
+            alt="{{ imageCardData?.postTitle }}" />
+        <app-vjs-player [bigPlayButton]="bigPlayButton" [id]="imageCardData.postId" *ngIf="imageCardData.photoUrl && imageCardData.contentType == 'video'" [controls]="true" [autoplay]="autoplay" [streamUrl]="getVideoUrl()"></app-vjs-player>
+    </ng-container>
+    <ng-template #s3>
+        <img *ngIf="imageCardData.photoUrl && imageCardData.photoUrl.indexOf('/image/') != -1 || isImage(imageCardData.photoUrl)" [src]="imageCardData.photoUrl"
+            alt="{{ imageCardData?.postTitle }}" />
+        <app-vjs-player [bigPlayButton]="bigPlayButton" [id]="imageCardData.postId" *ngIf="imageCardData.photoUrl && imageCardData.photoUrl.indexOf('/video/') != -1" [controls]="true" [autoplay]="autoplay" [streamUrl]="getVideoUrl()"></app-vjs-player>
+    </ng-template>
+    <span *ngIf="!searchedPostData" (click)="onSaveClick(imageCardData.postId)" [ngClass]="{ active: isSaved, isLoading: saveLoader }"
+        role="cursor">
+        <img src="assets/images/heart-white-outline.svg" alt="Wishlist" />
+        <img src="assets/images/heart-red-filled.svg" alt="Wishlist" />
+    </span>
+    <div class="imagecard__content flex flexColumn justifyEnd" *ngIf="fromWishList" role="cursor" [routerLink]=" ['/post', imageCardData?.postId]">
+        <aside>
+            <h5 class="text-ellipse">
+                {{ imageCardData?.postTitle }}
+            </h5>
+            <p>{{ imageCardData?.postDesc }}</p>
+        </aside>
+    </div>
+    <div class="imagecard__content flex flexColumn justifyEnd" *ngIf="!fromWishList" (click)="$event.stopPropagation();onCardClick(imageCardData.postId)" role="cursor">
+      <aside>
+          <h5 class="text-ellipse">
+              {{ imageCardData?.postTitle }}
+          </h5>
+          <p>{{ imageCardData?.postDesc }}</p>
+      </aside>
+  </div>
+</div>

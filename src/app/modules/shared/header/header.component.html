@@ -1,0 +1,123 @@
+<div class="header" [ngClass]="{'header--simple': isSearchHeader()}">
+    <div class="container header__holder dflex alignCenter justifyBetween">
+        <div class="header__logo flex alignCenter">
+            <button (click)="openSidebar()" *ngIf="hasRoute('user')"
+                type="button" class="header__toggleSidebar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a *ngIf="!isSearchHeader()" [routerLink]="['']" title="Outside">
+                <app-logo></app-logo>
+            </a>
+        </div> 
+       <div *ngIf="!isSearchHeader()" class="header__search flex alignCenter" [ngClass]="{searchOpen: searchToggle }">
+            <app-search-bar className="search-bar--header"></app-search-bar>
+            <button type="button" (click)="searchToggle= !searchToggle" title="Close">
+                <img src="assets/images/close.svg" alt="Close" />
+            </button>
+        </div>
+        <div class="header__account">
+            <ul class="header__skeltons" *ngIf="isLoading">
+                <li class="flex alignCenter">
+                    <app-skeleton type="circle" width="34px" height="34px"></app-skeleton>
+                    <app-skeleton width="80px" height="10px" margin="0 0 0 5px"></app-skeleton>
+                </li>
+            </ul>
+            <ul class="dflex alignCenter" *ngIf="!isLoading">
+                <li class="search">
+                    <button type="button" role="cursor" aria-label="Search Toggle" title="Search"
+                        (click)="searchToggle= !searchToggle">
+                        <img src="assets/images/search-white.svg" alt="Search"/>
+                    </button>
+                </li>
+                <li #notifRef *ngIf="isLoggedIn" class="notifications">
+                    <button type="button" role="cursor" title="Notifications"
+                        (click)="toggleNotification()">
+                        <img src="assets/images/notification.svg" alt="Notifications" />
+                        <sup *ngIf="totalUnreadNotifications> 0">{{ totalUnreadNotifications }}</sup>
+                    </button>
+                    <aside *ngIf="notificationToggle">
+                        <h5 class="dflex alignCenter justifyBetween">
+                            <span>Notifications</span>
+                            <span *ngIf="notifications && notifications.length> 0" (click)="clearAllNotification()" class="button red">
+                                Clear
+                            </span>
+                        </h5>
+                        <ul (scroll)="onNotifScroll($event)">
+                            <ng-container *ngFor="let item of notifications">
+                                <li role="cursor" [id]="item.id" [ngClass]="{ notRead:
+                                    !item.isReaded }"
+                                    (click)="onNotifClick(item.type,item.postId
+                                    || '',item.username,item.id)">
+                                    <img [src]="item.photo || 'assets/images/skelton-man-md.png'" />
+                                    <p>{{ item.description }}</p>
+                                    <span (click)="deleteNotification(item.id)">&times;</span>
+                                </li>
+                            </ng-container>
+                            <li class="noMore justifyCenter"
+                                *ngIf="!notifications || notifications.length == 0">
+                                <p>No New Notifications</p>
+                            </li>
+                        </ul>
+                        <p *ngIf="notifications.length <totalNotifications &&
+                            !reachedEnd">
+                            <span (click)="loadMoreNotifications()"
+                                class="button">
+                                Load More
+                                <div class="btn-loader"
+                                    *ngIf="isLoadingMoreNotif">
+                                    <span class="btn-loader__dots"></span>
+                                    <span class="btn-loader__dots"></span>
+                                    <span class="btn-loader__dots"></span>
+                                </div>
+                            </span>
+                        </p>
+                    </aside>
+                </li>
+                <li *ngIf="isLoggedIn" class="account flex alignCenter">
+                    <button type="button" role="cursor" title="Navigate"
+                        mat-button [matMenuTriggerFor]="menu">
+                        <img *ngIf="userProfileImg; else notFound"
+                            [src]="userProfileImg" alt="User" />
+                        <ng-template #notFound>
+                            <img src="assets/images/skelton-man-md-gray.png" alt="User" />
+                        </ng-template>
+                        <span> {{ userFullName }} </span>
+                        <img src="assets/images/arrow-down-white.png" alt="Dropdown" />
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="goToFeed()">
+                            <img src="assets/images/home-gray.svg" alt="Feed" />
+                            <img src="assets/images/home-blue.svg" alt="Feed" />
+                            Feed
+                        </button>
+                        <button mat-menu-item (click)="goToProfile()">
+                            <img src="assets/images/user-gray.svg" alt="Profile"
+                                />
+                            <img src="assets/images/user-blue.svg" alt="Profile"
+                                />
+                            Profile
+                        </button>
+                        <button mat-menu-item (click)="changePasswordPopUp()">
+                            <img src="assets/images/user-gray.svg" alt="Profile"/>
+                            <img src="assets/images/user-blue.svg" alt="Profile"/>
+                            Change Password
+                        </button>
+                        <button mat-menu-item (click)="logout()">
+                            <img src="assets/images/logout-gray.svg" alt="Logout" />
+                            <img src="assets/images/logout-blue.svg" alt="Logout" />
+                            Logout
+                        </button>
+                    </mat-menu>
+                </li>
+                <li *ngIf="!isLoggedIn" class="notLogged">
+                    <button type="button" role="cursor" title="Login" class="button circled outline-white" (click)="loginClicked()">
+                        Login / Signup
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="emptyheader"></div>

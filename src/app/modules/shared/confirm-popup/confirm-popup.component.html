@@ -1,0 +1,18 @@
+<div class="dialog__wrap">
+    <span (click)="closeModal('NO')" class="dialog__close">
+        <img src="assets/images/close.svg" alt="Remove" />
+    </span>
+    <div class="dialog__body">
+        <div class="confirmation">
+            <h4>{{ heading }}</h4>
+            <div class="confirmation__buttons">
+                <button (click)="closeModal('NO')" class="button sm white-dark">
+                    {{ cancelText }}
+                </button>
+                <button (click)="closeModal('YES')" class="button sm red">
+                    {{ confirmText }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

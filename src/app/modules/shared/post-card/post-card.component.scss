@@ -1,0 +1,110 @@
+@import "../../../../assets/scss/variables.scss";
+
+.post-card {
+    @extend %card-box;
+    ::ng-deep .gallery__grid & {
+        background-color: $color-white-light;
+        box-shadow: none;
+    }
+    &__head {
+        margin-bottom: 15px;
+        aside {
+            width: calc(100% - 35px);
+            img {
+                @include image-round(60px);
+                margin-right: 10px;
+                @include max-screen($tablet) {
+                    @include image-round(50px);
+                }
+            }
+            h5 {
+                font-weight: bold;
+                margin-bottom: 0;
+            }
+            p {
+                margin-bottom: 0;
+            }
+        }
+        button {
+            @extend %button-type-remove;
+        }
+    }
+    figure {
+        margin-bottom: 15px;
+        img {
+            border-radius: $radius-md;
+            object-fit: cover;
+            width: 100%;
+            height: 300px;
+            box-shadow: $shadow-card;
+            @include max-screen($desktop-xl) {
+                height: 220px;
+            }
+        }
+        &.videoWrap {
+            border-radius: $radius-md;
+            video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    h5 {
+        font-weight: bold;
+        margin-bottom: 5px;
+        & + p {
+            font-size: 14px;
+            @include text-clamp(2);
+        }
+    }
+    ul {
+        border-top: 1px solid $color-border;
+        padding-top: 18px;
+        li {
+            &:nth-child(2) {
+                margin-left: 40px;
+            }
+            &:last-child {
+                margin-left: auto;
+            }
+            button {
+                @extend %button-type-remove;
+                &[title="Like"] {
+                    img {
+                        &:nth-of-type(2) {
+                            display: none;
+                        }
+                    }
+                }
+                &.active {
+                    img {
+                        display: none;
+                        &:nth-of-type(2) {
+                            display: inline-block;
+                        }
+                    }
+                }
+                img {
+                    width: 20px;
+                    margin-right: 3px;
+                    @include max-screen($tablet) {
+                        width: 16px;
+                    }
+                }
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    &__content {
+        min-height: 89px;
+        padding-bottom: 1px;
+    }
+    ::ng-deep {
+        .video-js {
+            box-shadow: $shadow-card;
+        }
+    }
+}

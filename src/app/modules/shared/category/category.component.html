@@ -1,0 +1,22 @@
+<div class="category" *ngIf="!slider">
+    <div class="category__list dflex justifyCenter">
+        <div (click)="onCategoryClick(category)" class="category__item" *ngFor="let category of categories">
+            <picture>
+                <img [src]="category.img" alt=""/>
+            </picture>
+            <span>{{category.title}}</span>
+        </div>
+    </div>
+</div>
+<div class="category category--slider" *ngIf="slider">
+    <ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let category of categories">
+            <div (click)="onCategoryClick(category)" class="category__item" [ngClass]="{active: category.value == selectedCategory}">
+                <picture>
+                    <img [src]="category.img" alt=""/>
+                </picture>
+                <span>{{category.title}}</span>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</div>

@@ -1,0 +1,64 @@
+@import '../../../../assets/scss/variables.scss';
+.search-bar {
+    &__logo {
+        width: 100%;
+        display: block;
+        max-width: 550px;
+        margin: 0 auto 50px;
+        @include max-screen($tablet){
+            max-width: 400px;
+        }
+        @include max-screen($mobile){
+            max-width: 250px;
+            margin-bottom: 30px;
+        }
+    }
+    &__wrap {
+        margin: 0 auto;
+        max-width: 850px;
+        position: relative;
+        aside {
+            top: 0;
+            right: 35px;
+            height: 100%;
+            position: absolute;
+            @include max-screen($mobile){
+                right: 20px;
+            }
+        } 
+    }
+    &__switch {
+        picture {
+            cursor: pointer;
+            display: block;
+            position: relative;
+            margin-left: 24px;
+            @include max-screen($mobile){
+                width: 18px;
+                margin-left: 15px;
+            }
+            img {
+                transition: 0.3s ease-in-out opacity;
+                &:nth-child(1){
+                    top: 50%;
+                    left: 50%;
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                }
+                &:nth-child(2){
+                    opacity: 0;
+                }
+            }
+            &.active {
+                img {
+                    &:nth-child(1){
+                        opacity: 0;
+                    }
+                    &:nth-child(2){
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}

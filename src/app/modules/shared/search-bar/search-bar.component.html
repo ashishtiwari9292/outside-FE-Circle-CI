@@ -1,0 +1,36 @@
+<div class="search-bar" [ngClass]="className">
+  <input maxlength="100" #searchInput (keyup.enter)="searchSubmit(); trigger.closePanel()" [(ngModel)]="searchString" type="search"
+    placeholder="Search..." class="circled" matInput [matAutocomplete]="auto" #trigger="matAutocompleteTrigger" />
+  <mat-autocomplete #auto="matAutocomplete" class="search-dropdown">
+    <label *ngIf="foundPosts && foundPosts.length"><b>Posts</b> </label>
+    <mat-option *ngFor="let post of foundPosts" [value]="post.postTitle" (click)="onPostClick(post.id)">
+      <img *ngIf="post.photoUrl.indexOf('/image/') != -1 || isImage(post.photoUrl)" [src]="post.photoUrl || 'assets/images/skelton-card-2.svg'" alt="{{ post.postTitle }}" />
+      <video *ngIf="post.photoUrl.indexOf('/video/') != -1" [src]="post.photoUrl"></video>
+      {{ post.postTitle }}
+    </mat-option>
+
+    <label *ngIf="foundUsers && foundUsers.length"><b>Users</b></label>
+    <mat-option *ngFor="let user of foundUsers" [value]="user.username" (click)="onUserClick(user.username)">
+      <img [src]="user.photoUrl || 'assets/images/skelton-man-lg-gray.png'" alt="{{ user.fullName }}" />
+      {{ user.username }}
+    </mat-option>
+
+    <mat-option *ngIf="noResult" [disabled]="true">
+      No Results Found!
+    </mat-option>
+    <mat-option *ngIf="loadingSearch && searchType == 'default'" [disabled]="true">
+      <div class="search-bar__skeleton flex alignCenter" *ngFor="let i of [].constructor(3)">
+        <app-skeleton type="circle" width="50px" height="50px" margin="0 10px 0"></app-skeleton>
+        <app-skeleton height="10px" width="240px"></app-skeleton>
+      </div>
+    </mat-option>
+    <span *ngIf="
+    (foundUsers && foundUsers.length) || (foundPosts && foundPosts.length)
+  " (click)="searchSubmit();trigger.closePanel()">
+      <span class="search-dropdown__viewall">View All</span>
+    </span>
+  </mat-autocomplete>
+  <button type="button" (click)="searchSubmit()" role="cursor" aria-label="Search" title="Search">
+    <img src="assets/images/search.svg" alt="Search" />
+  </button>
+</div>

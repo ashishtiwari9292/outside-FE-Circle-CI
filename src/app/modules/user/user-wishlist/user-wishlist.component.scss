@@ -1,0 +1,69 @@
+@import "../../../../assets/scss/variables.scss";
+
+.user-whishlist {
+    ul {
+        margin: 0 -15px;
+        @include max-screen($mobile) {
+            margin: 0 -5px;
+        }
+        li {
+            width: calc(100% / 3);
+            padding: 0 15px;
+            margin-bottom: 30px;
+            position: relative;
+            @include max-screen($mobile) {
+                width: calc(100% / 2);
+                padding: 0 5px;
+                margin-bottom: 10px;
+            }
+            app-image-card {
+                width: 100%;
+                display: flex;
+            }
+            a {
+                position: absolute;
+                right: 25px;
+                top: 10px;
+                z-index: 4;
+                width: 26px;
+                @include max-screen($mobile) {
+                    right: 15px;
+                    top: 6px;
+                    width: 18px;
+                }
+            }
+        }
+    }
+    &__skelton {
+        margin: 0 -15px;
+        @include max-screen($mobile) {
+            margin: 0 -5px;
+        }
+        &-item {
+            width: calc(100% / 3);
+            padding: 0 15px;
+            margin-bottom: 20px;
+            @include max-screen($mobile) {
+                width: calc(100% / 2);
+                padding: 0 5px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    &__loading {
+        text-align: center;
+        button {
+            @extend %button-type-remove;
+            margin-bottom: 15px;
+            cursor: auto;
+            &:hover {
+                color: $color-primary;
+            }
+            .btn-loader {
+                &__dots {
+                    background: $color-primary;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+@import "../../../assets/scss/variables.scss";
+
+.dashboard {
+    width: 100%;
+    min-height: calc(100vh - 300px);
+    &__wrap {
+        padding-bottom: 30px;
+    }
+    &__overlay {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 75;
+        opacity: 0;
+        position: fixed;
+        visibility: hidden;
+        background: rgba($color-black, 0.5);
+        @include max-screen($mobile) {
+            top: 55px;
+        }
+        ::ng-deep body.is-active &,
+        &.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    .gallery__grid {
+        ::ng-deep {
+            .video-js {
+                height: auto !important;
+                padding: 0 !important;
+            }
+            video {
+                height: 200px !important;
+                position: static;
+                @include max-screen($mobile) {
+                    height: 110px !important;
+                }
+            }
+        }
+    }
+}

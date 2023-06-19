@@ -1,0 +1,88 @@
+<div class="sidebar">
+  <div class="sidebar__info">
+    <div *ngIf="isLoading">
+      <app-skeleton [type]="'circle'" width="100px" height="100px" margin="0 auto 15px"></app-skeleton>
+    </div>
+    <app-profile-widget [title]="sideBarData.fullName" [subTitle]="sideBarData.username"
+      [img]="sideBarData.profilePic || 'assets/images/skelton-man-md.png'" *ngIf="!isLoading"></app-profile-widget>
+    <ul class="dflex justifyCenter">
+      <li>
+        <h6 *ngIf="!isLoading">{{ sideBarData?.followersCount }}</h6>
+        Followers
+        <app-skeleton *ngIf="isLoading" width="30px" height="10px" margin="0 auto 5px"></app-skeleton>
+      </li>
+      <li>
+        <h6 *ngIf="!isLoading">{{ sideBarData?.postCount }}</h6>
+        Posts
+        <app-skeleton *ngIf="isLoading" width="30px" height="10px" margin="0 auto 5px"></app-skeleton>
+      </li>
+      <li>
+        <h6 *ngIf="!isLoading">{{ sideBarData?.followingCount }}</h6>
+        Following
+        <app-skeleton *ngIf="isLoading" width="30px" height="10px" margin="0 auto 5px"></app-skeleton>
+      </li>
+    </ul>
+    <div class="flex justifyCenter">
+      <button *ngIf="!ownProfile && !isLoading" (click)="onFollow()" type="button" role="cursor"
+        class="button green flex justifyCenter alignCenter" [disabled]="followLoader">
+        {{
+        followLoader
+        ? "Loading..."
+        : sideBarData?.isFollowed
+        ? "Unfollow"
+        : "Follow"
+        }}
+        <div class="btn-loader" *ngIf="followLoader">
+          <span class="btn-loader__dots"></span>
+          <span class="btn-loader__dots"></span>
+          <span class="btn-loader__dots"></span>
+        </div>
+      </button>
+    </div>
+
+  </div>
+  <ul (click)="closeSideBar()">
+    <li>
+      <a [routerLink]="['/user', routeUsername]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        title="Feed">
+        <img src="assets/images/home-gray.svg" alt="Feed" />
+        <img src="assets/images/home-blue.svg" alt="Feed" />
+        Feed
+      </a>
+    </li>
+    <li *ngIf="ownProfile">
+      <a [routerLink]="['/user/wishlist', routeUsername]" routerLinkActive="active" title="Wishlist">
+        <img src="assets/images/heart-gray.svg" alt="Wishlist" />
+        <img src="assets/images/heart-blue.svg" alt="Wishlist" />
+        Wishlist
+      </a>
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a [routerLink]="['/user/followers', routeUsername]" routerLinkActive="active" title="Followers">
+        <img src="assets/images/followers-gray.svg" alt="Followers" />
+        <img src="assets/images/followers-blue.svg" alt="Followers" />
+        Followers
+      </a>
+    </li>
+    <li *ngIf="ownProfile">
+      <a [routerLink]="['/user/posts', routeUsername]" routerLinkActive="active" title="My Posts">
+        <img src="assets/images/gallery-gray.svg" alt="My Posts" />
+        <img src="assets/images/gallery-blue.svg" alt="My Posts" />
+        My Posts
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/user/profile', routeUsername]" routerLinkActive="active" title="Profile">
+        <img src="assets/images/user-gray.svg" alt="Profile" />
+        <img src="assets/images/user-blue.svg" alt="Profile" />
+        Profile
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar__createPost" *ngIf="ownProfile">
+    <button class="button md" title="Create a Post" (click)="createPost()">
+      <img src="assets/images/plus-white.svg" alt="Add" />
+      Create a Post
+    </button>
+  </div>
+</div>
