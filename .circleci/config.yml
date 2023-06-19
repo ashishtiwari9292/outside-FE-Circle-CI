@@ -6,6 +6,8 @@ executors:
 
 jobs:
   build:
+    machine:
+      - image: ubuntu-2004:2023.04.2
     executor: angular_executor
     steps:
       - checkout
@@ -28,6 +30,14 @@ jobs:
           name: Build
           command: npm run build:production
 
+deploy:
+    machine:
+      - image: ubuntu-2004:2023.04.2
+        # image: circleci/node:12.14.0-browsers
+    steps:
+      - attach_workspace:
+          at: .
+      - checkout
       - run:
           name: Deploy to S3
           command: |
@@ -41,9 +51,9 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      # - deploy:
-      #     requires:
-      #       - build
+      - deploy:
+          requires:
+            - build
 
 
 
