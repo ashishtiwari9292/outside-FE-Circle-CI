@@ -1,19 +1,55 @@
 version: 2.1
-phases:
-  install:
-    runtime-versions:
-      nodejs: 16
-  pre_build:
-    commands:
-      - echo "Prebuild, installing npm dependencies"
-      - npm install --legacy-peer-deps 
+
+jobs:
   build:
-    commands:
-      - echo "Starting the build step"
-      - npm run build:$stage
-      - echo "Finished"
-artifacts:
-  name: "BuildOutput"
-  files:
-    - '**/*'
-  base-directory: 'dist/outside-fe'
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run:
+          name: Installing AWS CLI
+          command: |
+            sudo apt-get update
+            sudo apt install python3-pip
+            sudo pip3 install awsebcli --upgrade
+      - run: cd ./app && echo "Prebuild, installing npm dependencies" && npm install --legacy-peer-deps && npm run build:production
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+            
+  deploy:
+    machine:
+        image: ubuntu-2004:202010-01
+    steps:
+      - attach_workspace:
+          at: .
+      - checkout
+      - run: aws s3 sync ./app/build s3://ci-cd-example
+    
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 16
+#   pre_build:
+#     commands:
+#       - echo "Prebuild, installing npm dependencies"
+#       - npm install --legacy-peer-deps 
+#   build:
+#     commands:
+#       - echo "Starting the build step"
+#       - npm run build:$stage
+#       - echo "Finished"
+# artifacts:
+#   name: "BuildOutput"
+#   files:
+#     - '**/*'
+#   base-directory: 'dist/outside-fe'
