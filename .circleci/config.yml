@@ -17,7 +17,7 @@ jobs:
 
       - run:
           name: Install Dependencies
-          command: npm install --legacy-peer-deps
+          command: npm install --legacy-peer-dep
 
       - save_cache:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
@@ -28,13 +28,20 @@ jobs:
           name: Build
           command: npm run build:production
 
-      # Add any additional steps here, such as running tests or deploying
+      - run:
+          name: Deploy to S3
+          command: |
+            aws configure set aws_access_key_id <your_access_key>
+            aws configure set aws_secret_access_key <your_secret_key>
+            aws configure set default.region <your_region>
+            aws s3 sync ./dist s3://<your_bucket_name>
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_deploy:
     jobs:
       - build
+
 
 
 # version: 2.1
