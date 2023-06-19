@@ -6,16 +6,15 @@ executors:
 
 jobs:
   build:
-    machine:
-      - image: ubuntu-2004:2023.04.2
     executor: angular_executor
     steps:
       - checkout
+
       - run:
           name: Installing AWS CLI
           command: |
             sudo apt-get update
-            sudo apt install python3-pip
+            sudo apt-get install -y python3-pip
             sudo pip3 install awsebcli --upgrade
 
       - restore_cache:
@@ -25,7 +24,7 @@ jobs:
 
       - run:
           name: Install Dependencies
-          command: npm install --legacy-peer-dep
+          command: npm install --legacy-peer-deps
 
       - save_cache:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
@@ -36,10 +35,9 @@ jobs:
           name: Build
           command: npm run build:production
 
-deploy:
+  deploy:
     machine:
-      - image: ubuntu-2004:2023.04.2
-        # image: circleci/node:12.14.0-browsers
+      image: ubuntu-2004:2023.04.2
     steps:
       - attach_workspace:
           at: .
@@ -47,6 +45,8 @@ deploy:
       - run:
           name: Deploy to S3
           command: |
+            apt-get update
+            apt-get install -y awscli
             aws configure set aws_access_key_id "AKIASHRYCLQM5SBLHGGB"
             aws configure set aws_secret_access_key "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"
             aws configure set default.region "us-east-1"
@@ -60,6 +60,7 @@ workflows:
       - deploy:
           requires:
             - build
+
 
 
 
