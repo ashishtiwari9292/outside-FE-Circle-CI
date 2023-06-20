@@ -9,14 +9,6 @@ jobs:
     executor: angular_executor
     steps:
       - checkout
-
-      # - run:
-      #     name: Installing AWS CLI
-      #     command: |
-      #       sudo apt-get update
-      #       sudo apt-get install -y python3-pip
-      #       sudo pip3 install awsebcli --upgrade
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
@@ -45,12 +37,12 @@ jobs:
       - run:
           name: Deploy to S3
           command: |
-            apt-get update
-            apt-get install -y awscli
-            aws configure set aws_access_key_id "AKIASHRYCLQM5SBLHGGB"
-            aws configure set aws_secret_access_key "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"
-            aws configure set default.region "us-east-1"
-            aws s3 sync ./dist/outside-fe s3://outside-fe-circle-ci
+            sudo apt-get update
+            sudo apt-get install -y awscli
+            sudo aws configure set aws_access_key_id "AKIASHRYCLQM5SBLHGGB"
+            sudo aws configure set aws_secret_access_key "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"
+            sudo aws configure set default.region "us-east-1"
+            sudo aws s3 sync ./dist/outside-fe s3://outside-fe-circle-ci
 
 workflows:
   version: 2
