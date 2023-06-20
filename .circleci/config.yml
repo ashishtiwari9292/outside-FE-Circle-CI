@@ -12,7 +12,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
 
       - run:
           name: Install Dependencies
@@ -42,7 +41,7 @@ jobs:
             sudo aws configure set aws_access_key_id "AKIASHRYCLQM5SBLHGGB"
             sudo aws configure set aws_secret_access_key "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"
             sudo aws configure set default.region "us-east-1"
-            sudo aws s3 sync ./app/build s3://outside-fe-circle-ci
+            sudo aws s3 sync ./app/dist/outside-fe s3://outside-fe-circle-ci
 
 workflows:
   version: 2
@@ -53,25 +52,4 @@ workflows:
           requires:
             - build
 
-
-
-
-
-# phases:
-#   install:
-#     runtime-versions:
-#       nodejs: 16
-#   pre_build:
-#     commands:
-#       - echo "Prebuild, installing npm dependencies"
-#       - npm install --legacy-peer-deps 
-#   build:
-#     commands:
-#       - echo "Starting the build step"
-#       - npm run build:$stage
-#       - echo "Finished"
-# artifacts:
-#   name: "BuildOutput"
-#   files:
-#     - '**/*'
 #   base-directory: 'dist/outside-fe'
