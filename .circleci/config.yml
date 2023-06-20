@@ -10,9 +10,8 @@ jobs:
           name: Installing AWS CLI
           command: |
             sudo apt-get update
-            sudo apt install python3-pip
-            sudo pip3 install awsebcli --upgrade
-      - run: cd ./usr/src/app && npm install --legacy-peer-deps && npm run build:production
+            sudo apt-get install -y awscli
+      - run: cd ./app && npm install --legacy-peer-deps && npm run build:production
       - persist_to_workspace:
           root: .
           paths:
