@@ -16,32 +16,6 @@ jobs:
           root: .
           paths:
             - .
-# executors:
-#   angular_executor:
-#     docker:
-#       - image: circleci/node:12.14.0-browsers
-
-# jobs:
-#   build:
-#     executor: angular_executor
-#     steps:
-#       - checkout
-#       - restore_cache:
-#           keys:
-#             - v1-dependencies-{{ checksum "package-lock.json" }}
-
-#       - run:
-#           name: Install Dependencies
-#           command: npm install --legacy-peer-deps
-
-#       - save_cache:
-#           key: v1-dependencies-{{ checksum "package-lock.json" }}
-#           paths:
-#             - node_modules
-
-#       - run:
-#           name: Build
-#           command: npm run build:production
 
   deploy:
     machine:
@@ -53,9 +27,6 @@ jobs:
       - run:
           name: Deploy to S3
           command: |
-            sudo aws configure set aws_access_key_id "AKIASHRYCLQM5SBLHGGB"
-            sudo aws configure set aws_secret_access_key "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"
-            sudo aws configure set default.region "us-east-1"
             sudo aws s3 sync ./dist/outside-fe s3://outside-fe-circle-ci
 
 workflows:
