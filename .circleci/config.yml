@@ -11,7 +11,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y awscli
-      - run: cd ./app && npm install --legacy-peer-deps && npm run build:production
+      - run: npm install --legacy-peer-deps && npm run build:production
       - persist_to_workspace:
           root: .
           paths:
