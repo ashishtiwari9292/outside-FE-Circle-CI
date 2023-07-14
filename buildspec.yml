@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+  pre_build:
+    commands:
+      - echo "Prebuild, installing npm dependencies"
+      - npm install --legacy-peer-deps 
+  build:
+    commands:
+      - echo "Starting the build step"
+      - npm run build:dev
+      - echo "Finished"
+artifacts:
+  name: "BuildOutput"
+  files:
+    - '**/*'
+  base-directory: 'dist/outside-fe'
