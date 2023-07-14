@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  socketUrl: "https://prod.api.outside.com/",
-  socketioUrl: `https://prod.api.outside.com/`,
+  socketUrl: "https://api.outsideclouds.com/outside",
+  socketioUrl: `https://api.outsideclouds.com/outside`,
   socket_port: "3000",
   cognitoUserPoolId: 'us-east-2_Ufe9SQj7i',
   cognitoAppClientId: '3mubp7j28p0ppurgavovnel3tr',
