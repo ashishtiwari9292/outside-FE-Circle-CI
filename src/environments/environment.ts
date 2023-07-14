@@ -9,7 +9,7 @@ export const environment = {
   socket_port: "3000",
   cognitoUserPoolId: 'us-east-2_Ufe9SQj7i',
   cognitoAppClientId: '3mubp7j28p0ppurgavovnel3tr',
-  apiUrl: 'https://prod.api.outside.com/api',
+  apiUrl: 'https://api.outsideclouds.com/outside',
   // apiUrl: 'http://localhost:3000/api',
   endPoints: {
     CLEAR_NOTIFICATION: 'action/notification/clear',
