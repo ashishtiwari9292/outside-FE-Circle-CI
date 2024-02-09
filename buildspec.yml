@@ -10,6 +10,7 @@ phases:
   build:
     commands:
       - echo "Starting the build step"
+      - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
       - echo "Finished"
 artifacts:
