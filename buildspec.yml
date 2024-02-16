@@ -2,7 +2,7 @@ version: 0.2
 env:
   secrets-manager:
     LOGIN: local/sonar:sonartoken
-    HOST: local/sonar:Host
+    HOST: local/sonar:HOST
     Organization: local/sonar:Organization
     Project: local/sonar:Project
 phases:
@@ -26,7 +26,7 @@ phases:
   build:
     commands:
       - echo "Build phase ..."
-      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
+      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
