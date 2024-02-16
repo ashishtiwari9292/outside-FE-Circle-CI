@@ -35,7 +35,7 @@ phases:
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
       - echo "Finished"
-  artifacts:
+artifacts:
   name: "BuildOutput"
   files:
     - '**/*'
