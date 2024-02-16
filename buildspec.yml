@@ -1,19 +1,60 @@
 version: 0.2
+env:
+  secrets-manager:
+    LOGIN: outside-fe:sonartoken
+    HOST: outside-fe:HOST
+    Organization: outside-fe:Organization
+    Project: outside-fe:Project
 phases:
   install:
+    commands:
+      - echo "Install phase ..."
     runtime-versions:
-      nodejs: 16
+      nodejs: 18
   pre_build:
     commands:
-      - echo "Prebuild, installing npm dependencies"
-      - npm install --legacy-peer-deps 
+      - pip3 install -q awscli --upgrade --user
+      - pip3 install boto3
+      - apt-get update
+      - apt install openjdk-17-jdk openjdk-17-jre -y
+      - java -version
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - rm -rf sonar-scanner-cli-4.7.0.2747-linux.zip
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+      - npm install --legacy-peer-deps
   build:
     commands:
-      - echo "Starting the build step"
+      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.sonar.java.binaries=**/*.java
+      - sleep 5
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - cat result.json
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
+      - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
-      - echo "Finished"
 artifacts:
   name: "BuildOutput"
   files:
     - '**/*'
   base-directory: 'dist/outside-fe'
+
+  # version: 0.2
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 18
+#   pre_build:
+#     commands:
+#       - echo "Prebuild, installing npm dependencies"
+#       - npm install --legacy-peer-deps 
+#   build:
+#     commands:
+#       - echo "Starting the build step"
+#       - export NODE_OPTIONS=--openssl-legacy-provider
+#       - npm run build:dev
+#       - echo "Finished"
+# artifacts:
+#   name: "BuildOutput"
+#   files:
+#     - '**/*'
+#   base-directory: 'dist/outside-fe'
