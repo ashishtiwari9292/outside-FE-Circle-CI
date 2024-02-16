@@ -16,7 +16,7 @@ phases:
       - pip3 install -q awscli --upgrade --user
       - pip3 install boto3
       - apt-get update
-      - apt install default-jre
+      - apt-get install -y jq
       - java -version
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
