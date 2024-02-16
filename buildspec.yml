@@ -13,28 +13,23 @@ phases:
       nodejs: 18
   pre_build:
     commands:
-      - echo "Pre build phase ..."
+      - pip3 install -q awscli --upgrade --user
+      - pip3 install boto3
       - apt-get update
-      - apt-get install -y jq
+      - apt-get install -y default-jdk
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - echo "Current path is >>>"
-      - sh $pwd
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      - ls $pwd
       - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
-      - npm install --legacy-peer-deps 
+      - npm install --legacy-peer-deps
   build:
     commands:
-      - echo "Build phase ..."
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
       - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
-      - echo "Starting the build step"
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
-      - echo "Finished"
 artifacts:
   name: "BuildOutput"
   files:
