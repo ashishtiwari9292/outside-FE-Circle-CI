@@ -16,10 +16,11 @@ phases:
       - pip3 install -q awscli --upgrade --user
       - pip3 install boto3
       - apt-get update
-      - apt-get install -y jq
+      - apt install openjdk-17-jdk openjdk-17-jre -y
       - java -version
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - rm -rf sonar-scanner-cli-4.7.0.2747-linux.zip
       - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
       - npm install --legacy-peer-deps
   build:
