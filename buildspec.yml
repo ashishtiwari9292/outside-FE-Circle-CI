@@ -13,8 +13,6 @@ phases:
       nodejs: 18
   pre_build:
     commands:
-      - pip3 install -q awscli --upgrade --user
-      - pip3 install boto3
       - apt-get update
       - apt install openjdk-17-jdk openjdk-17-jre -y
       - java -version
@@ -25,7 +23,7 @@ phases:
       - npm install --legacy-peer-deps
   build:
     commands:
-      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.sonar.java.binaries=**/*.java
+      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
