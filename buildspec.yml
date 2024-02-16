@@ -1,39 +1,63 @@
 version: 0.2
+env:
+  secrets-manager:
+    LOGIN: local/sonar:sonartoken
+    HOST: local/sonar:Host
+    Organization: local/sonar:Organization
+    Project: local/sonar:Project
 phases:
   install:
+    commands:
+      - echo "Install phase ..."
     runtime-versions:
       nodejs: 18
   pre_build:
     commands:
-      - echo "Prebuild, installing npm dependencies"
+      - echo "Pre build phase ..."
+      - apt-get update
+      - apt-get install -y jq
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - echo "Current path is >>>"
+      - sh $pwd
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - ls $pwd
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
       - npm install --legacy-peer-deps 
   build:
     commands:
+      - echo "Build phase ..."
+      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
+      - sleep 5
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - cat result.json
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
       - echo "Starting the build step"
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
       - echo "Finished"
-artifacts:
+  artifacts:
   name: "BuildOutput"
   files:
     - '**/*'
   base-directory: 'dist/outside-fe'
 
-# For Amplify buildspec File 
-# version: 1
-# frontend:
-#   phases:
-#     preBuild:
-#       commands:
-#         - npm install --legacy-peer-deps
-#     build:
-#       commands:
-#         - node -v
-#         - npm run build:dev
-#   artifacts:
-#     baseDirectory: 'dist/outside-fe'
-#     files:
-#       - '**/*'
-#   cache:
-#     paths:
-#       - node_modules/**/*
+  # version: 0.2
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 18
+#   pre_build:
+#     commands:
+#       - echo "Prebuild, installing npm dependencies"
+#       - npm install --legacy-peer-deps 
+#   build:
+#     commands:
+#       - echo "Starting the build step"
+#       - export NODE_OPTIONS=--openssl-legacy-provider
+#       - npm run build:dev
+#       - echo "Finished"
+# artifacts:
+#   name: "BuildOutput"
+#   files:
+#     - '**/*'
+#   base-directory: 'dist/outside-fe'
