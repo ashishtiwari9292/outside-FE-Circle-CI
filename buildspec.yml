@@ -1,7 +1,7 @@
 version: 0.2
 env:
   secrets-manager:
-    LOGIN: outside-fe:sonartoken
+    LOGIN: outside-fe:SONAR_TOKEN
     HOST: outside-fe:HOST
     Organization: outside-fe:Organization
     Project: outside-fe:Project
@@ -23,7 +23,7 @@ phases:
       - npm install --legacy-peer-deps
   build:
     commands:
-      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
+      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.sources=. 
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
