@@ -26,7 +26,7 @@ phases:
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - echo "sonar.java.binaries=**/*.java" > sonar.properties
-      - echo "sonar.java.binaries=target/classes" > sonar.properties
+      - echo "sonar.java.binaries=**/target/classes" > sonar.properties
       - export SONAR_SCANNER_OPTS="-server"
       - npm install --legacy-peer-deps
   build:
