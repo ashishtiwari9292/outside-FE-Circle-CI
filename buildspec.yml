@@ -14,7 +14,7 @@ phases:
   pre_build:
     commands:
       - apt-get update
-      - apt install openjdk-17-jdk openjdk-17-jre -y
+      - apt install -y jq
       - java -version
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
