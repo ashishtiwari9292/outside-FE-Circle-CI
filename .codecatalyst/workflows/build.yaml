@@ -1,0 +1,23 @@
+Name: SonarCloudAnalysis
+SchemaVersion: "1.0"
+
+Triggers:
+  - Type: Push
+Actions:
+  GitHubActions_fa:
+    Identifier: aws/github-actions-runner@v1.0.0
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Compute:
+      Type: EC2
+
+    Configuration:
+      Steps:
+        - name: SonarCloud Scan
+          uses: SonarSource/sonarcloud-github-action@master
+          env:
+            SONAR_TOKEN: ${Secrets.SONAR_TOKEN}
+          with:
+            args: >
+              -Dsonar.branch.name=${WorkflowSource.BranchName}
