@@ -11,15 +11,13 @@ phases:
       - echo "Install phase ..."
     runtime-versions:
       nodejs: latest
-      java: openjdk11
   pre_build:
     commands:
-      # - apt-get update
+      - apt-get update
       # - apt install -y jq
       - pip3 install -q awscli --upgrade --user
       - pip3 install boto3
-      # - yum -q install -y jq
-      - sudo apt install openjdk-11-jdk
+      - apt install -y jq
       - java -version
       # - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
       # - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
@@ -38,7 +36,7 @@ phases:
     commands:
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
-      - sonar-scanner -X -Dsonar.login=04f8c0ee1199dc2dd8ea60439726a36eeacc24a3 -Dsonar.organization=test-dev9292 -Dsonar.projectKey=test-dev9292_ashish -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
+      - $SONAR_SCANNER_HOME/bin/sonar-scanner -X -Dsonar.login=04f8c0ee1199dc2dd8ea60439726a36eeacc24a3 -Dsonar.organization=test-dev9292 -Dsonar.projectKey=test-dev9292_ashish -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
