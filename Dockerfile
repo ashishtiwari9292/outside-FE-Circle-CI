@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 # fix npm private module
 #ARG NPM_TOKENsd
 #COPY .npmrc /usr/src/app/
-#COPY package.json package.json///
+#COPY package.json package.json
 COPY package*.json /usr/src/app/
 
 # Bundle app source
@@ -29,7 +29,7 @@ RUN npm run build
 
 #RUN docker login --username vedantsingh123 --password "Kpk=:aC8/9m2(%s"
 
-FROM public.ecr.aws/nginx/nginx
+# FROM public.ecr.aws/nginx/nginx
 ## Remove default ng
 #WORKDIR /usr/src/app
 #COPY --from=builder /usr/src/app/dist/ .
