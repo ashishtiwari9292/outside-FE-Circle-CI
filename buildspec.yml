@@ -24,9 +24,10 @@ phases:
     commands:
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
-      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.organization=outsidefe -Dsonar.projectKey=outsidefe_outside9292 -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
+      # - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.organization=outsidefe -Dsonar.projectKey=outsidefe_outside9292 -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
+      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.projectKey=test -Dsonar.sources=. -Dsonar.host.url=http://18.217.5.121:9000
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=outsidefe_outside9292 > result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=test > result.json
       - cat result.json
       - if [ $(jq -r '.projectStatus.status' result.json) = "ERROR" ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0; fi
       - if [ "$(jq -r '.errors[0].msg' result.json)" = "Either 'analysisId', 'projectId' or 'projectKey' must be provided" ]; then exit 1; fi
