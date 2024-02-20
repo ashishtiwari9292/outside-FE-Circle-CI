@@ -31,6 +31,9 @@ phases:
       - if [ $(jq -r '.projectStatus.status' result.json) = "ERROR" ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0; fi
       - if [ "$(jq -r '.errors[0].msg' result.json)" = "Either 'analysisId', 'projectId' or 'projectKey' must be provided" ]; then exit 1; fi
       - if [ "$(jq -r '.projectStatus.status' result.json)" = "ERROR" ]; then exit 1; fi
+  post_build:
+    commands:
+      - aws s3 cp result.json s3://outside-s3-9292/sonar/result.json    
 artifacts:
   name: "BuildOutput"
   files:
