@@ -26,7 +26,6 @@ phases:
       # - echo "sonar.java.binaries=**/target/classes" > sonar.properties
   build:
     commands:
-      - cd sonar/
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
       - sonar-scanner -X -Dsonar.login=04f8c0ee1199dc2dd8ea60439726a36eeacc24a3 -Dsonar.organization=test-dev9292 -Dsonar.projectKey=test-dev9292_ashish -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
