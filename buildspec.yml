@@ -11,6 +11,7 @@ phases:
       - echo "Install phase ..."
     runtime-versions:
       nodejs: latest
+      java: openjdk11
   pre_build:
     commands:
       # - apt-get update
@@ -18,11 +19,13 @@ phases:
       - pip3 install -q awscli --upgrade --user
       - pip3 install boto3
       - yum -q install -y jq
+      # - sudo apt install openjdk-11-jdk
       - java -version
       # - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
       # - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
       # - rm -rf sonar-scanner-cli-5.0.1.3006-linux.zip
       # - export PATH=$PATH:./sonar-scanner-5.0.1.3006-linux/bin/
+      - npm install --legacy-peer-deps
       - export SONAR_SCANNER_VERSION=5.0.1.3006
       - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
       - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
@@ -31,7 +34,6 @@ phases:
       - echo "sonar.java.binaries=**/*.java" > sonar.properties
       - echo "sonar.java.binaries=**/target/classes" > sonar.properties
       - export SONAR_SCANNER_OPTS="-server"
-      - npm install --legacy-peer-deps
   build:
     commands:
       - export NODE_OPTIONS=--openssl-legacy-provider
