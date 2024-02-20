@@ -1,5 +1,6 @@
 version: 0.2
 env:
+  secrets-manager:
     SONAR_TOKEN: ${Secrets.SONAR_TOKEN}
 phases:
   install:
