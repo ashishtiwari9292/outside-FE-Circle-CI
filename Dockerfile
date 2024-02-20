@@ -35,7 +35,7 @@ RUN npm run build
 #COPY --from=builder /usr/src/app/dist/ .
 
 RUN rm -rf /usr/share/nginx/html/*
-## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
+## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder//
 COPY --from=builder /usr/src/app/dist/* /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
