@@ -14,7 +14,7 @@ phases:
   pre_build:
     commands:
       - apt-get update
-      - apt install -y jq
+      - apt-get install --yes openjdk-11-jre
       - java -version
       # - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
       # - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
