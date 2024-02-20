@@ -1,10 +1,4 @@
 version: 0.2
-# env:
-#   secrets-manager:
-#     LOGIN: outside-fe:SONAR_TOKEN
-#     # HOST: outside-fe:HOST
-#     # Organization: outside-fe:Organization
-#     # Project: outside-fe:Project
 phases:
   install:
     commands:
@@ -22,8 +16,7 @@ phases:
       - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
       - rm -rf sonar-scanner-cli-5.0.1.3006-linux.zip
       - export PATH=$PATH:sonar-scanner-5.0.1.3006-linux/bin/
-      # - echo "sonar.java.binaries=**/*.java" > sonar.properties
-      # - echo "sonar.java.binaries=**/target/classes" > sonar.properties
+
   build:
     commands:
       - export NODE_OPTIONS=--openssl-legacy-provider
@@ -32,32 +25,11 @@ phases:
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=test-dev9292_ashish > result.json
       - cat result.json
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
       - if [ "$(jq -r '.errors[0].msg' result.json)" = "Either 'analysisId', 'projectId' or 'projectKey' must be provided" ]; then exit 1; fi
       - if [ "$(jq -r '.projectStatus.status' result.json)" = "ERROR" ]; then exit 1; fi
-      # - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
 artifacts:
   name: "BuildOutput"
   files:
     - '**/*'
   base-directory: 'dist/outside-fe'
-
-  # version: 0.2
-# phases:
-#   install:
-#     runtime-versions:
-#       nodejs: 18
-#   pre_build:
-#     commands:
-#       - echo "Prebuild, installing npm dependencies"
-#       - npm install --legacy-peer-deps 
-#   build:
-#     commands:
-#       - echo "Starting the build step"
-#       - export NODE_OPTIONS=--openssl-legacy-provider
-#       - npm run build:dev
-#       - echo "Finished"
-# artifacts:
-#   name: "BuildOutput"
-#   files:
-#     - '**/*'
-#   base-directory: 'dist/outside-fe'
