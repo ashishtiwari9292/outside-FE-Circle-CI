@@ -10,7 +10,7 @@ phases:
     commands:
       - echo "Install phase ..."
     runtime-versions:
-      nodejs: latest
+      nodejs: 18
   pre_build:
     commands:
       - apt-get update
