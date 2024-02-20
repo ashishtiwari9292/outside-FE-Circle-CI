@@ -24,7 +24,7 @@ phases:
     commands:
       - export NODE_OPTIONS=--openssl-legacy-provider
       - npm run build:dev
-      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.organization=outsidefe -Dsonar.projectKey=outsidefe_outside9292 -Dsonar.sources=/root/sonar/ -Dsonar.host.url=https://sonarcloud.io
+      - sonar-scanner -X -Dsonar.login=$LOGIN -Dsonar.organization=outsidefe -Dsonar.projectKey=outsidefe_outside9292 -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=outsidefe_outside9292 > result.json
       - cat result.json
